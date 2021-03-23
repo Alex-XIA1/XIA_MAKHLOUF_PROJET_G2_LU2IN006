@@ -13,7 +13,7 @@ int main(){
         printf("Erreur a l'ouverture du fichier");
         return 1;
     }
-    Chaines* test;
+    Chaines* test=NULL;
     test=lectureChaines(fp);
     //printf("gamma = %d\n",test->gamma);
 

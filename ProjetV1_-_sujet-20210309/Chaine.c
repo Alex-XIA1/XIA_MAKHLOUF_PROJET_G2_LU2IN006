@@ -11,7 +11,7 @@ Chaines * lectureChaines(FILE* f){
         return NULL;
     }
 
-    Chaines *res =malloc(sizeof(Chaines*));
+    Chaines *res =malloc(sizeof(Chaines));
     res->chaines=NULL;
 
     char buffer[256];
@@ -37,7 +37,7 @@ Chaines * lectureChaines(FILE* f){
         //sleep(1);
         int tpint = nbCh;
         //printf("values num = %d\n",num);
-        CellChaine *tmp=malloc(sizeof(CellChaine*));
+        CellChaine *tmp=malloc(sizeof(CellChaine));
             if(res->chaines==NULL){
                 tmp->suiv=NULL;
                 res->chaines=tmp;
@@ -50,7 +50,7 @@ Chaines * lectureChaines(FILE* f){
         while(tpint>0){
             //printf("ICI\n");
             if(fscanf(ptr,"%f %f",&x,&y)){
-                CellPoint *tmp2=malloc(sizeof(CellPoint*));
+                CellPoint *tmp2=malloc(sizeof(CellPoint));
                 if(tmp->points==NULL){
                     tmp->points=tmp2;
                 }else{
@@ -78,18 +78,23 @@ void ecrireChaines(Chaines *C, FILE *f){
     ptr = f;
     Chaines* tmp = C;
 
+    if(tmp==NULL){
+        return;
+    }
+
     fprintf(ptr,"NbChain: %d\n",tmp->nbChaines);
     fprintf(ptr,"gamma: %d\n", tmp->gamma);
     fprintf(ptr,"\n");
     
     CellChaine* tmp2=tmp->chaines;
     
-    double x;
-    double y;
+    if(tmp2==NULL){
+        return;
+    }
+    
     while(tmp2){
-        int num;
         int cpt=0;
-        num = tmp2->numero;
+        int num = tmp2->numero;
 
         CellPoint* ctmp=tmp2->points;
         while(ctmp){
@@ -101,8 +106,8 @@ void ecrireChaines(Chaines *C, FILE *f){
 
         CellPoint* ptmp=tmp2->points;
         while(ptmp){
-            x=ptmp->x;
-            y=ptmp->y;
+            double x=ptmp->x;
+            double y=ptmp->y;
             fprintf(ptr,"%.2f %.2f ",x,y);
             ptmp=ptmp->suiv;
             //printf("valeurs pour x : %.2f et y : %.2f\n",x,y);
