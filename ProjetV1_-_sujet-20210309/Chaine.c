@@ -118,3 +118,30 @@ void ecrireChaines(Chaines *C, FILE *f){
     }
 
 }
+void liberer_liste_points(CellPoint *p){
+    if(p){
+        CellPoint *tmp=NULL;
+        while(p){
+            tmp=p->suiv;
+            free(p);
+            p=tmp;
+        }
+    }
+}
+void liberer_cellChaine(CellChaine *c){
+    if(c){
+        CellChaine *tmp=NULL;
+        while(c){
+        liberer_liste_points(c->points);
+        tmp=c->suiv;
+        free(c);
+        c=tmp;
+        }
+    }
+}
+void liberer_chaines(Chaines *c){
+    if(c){
+        liberer_cellChaine(c->chaines);
+        free(c);
+    }
+}
