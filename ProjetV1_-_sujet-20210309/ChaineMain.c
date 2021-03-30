@@ -1,4 +1,5 @@
 #include "Chaine.h"
+#include "SVGwriter.h"
 
 int main(){
     FILE *fp=NULL;
@@ -17,7 +18,15 @@ int main(){
     test=lectureChaines(fp);
     //printf("gamma = %d\n",test->gamma);
 
-    ecrireChaines(test,fp2);
+    //On commente ecrireChaines et afficheCHainesSVG pour eviter la recreation a chaque execution
+    //ecrireChaines(test,fp2);
+
+    //afficheChainesSVG(test,"Question1_3");
+    double q1n=longueurTotale(test);
+    printf("La longueur totale de toutes les chaines de la question 1 est egale a %lf unite inconnue\n",q1n);
+
+    int nbocc=comptePointsTotal(test);
+    printf("Le nombre de points du reseau de la question 1 est : %d\n",nbocc);
     fclose(fp);
     fclose(fp2);
     return 0;
