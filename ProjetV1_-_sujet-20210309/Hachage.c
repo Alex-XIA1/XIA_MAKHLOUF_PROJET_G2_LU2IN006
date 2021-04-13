@@ -102,10 +102,24 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
             
 
             //On ajoute le noeud actuel au voisins du precedent
-            CellNoeud *voisduprec=malloc(sizeof(CellNoeud));
-            voisduprec->nd=recup;
-            voisduprec->suiv=ajoutp1->voisins;
-            ajoutp1->voisins=voisduprec;
+            //On veut eviter les doublons on parcourt donc la liste des voisins du precedent
+            //on parcours les voisins de ajoutp1
+            CellNoeud *tmp1=ajoutp1->voisins;
+            int trouve=0;
+            while(tmp1!=NULL){
+                if(tmp1->nd==recup){
+                    //printf("JE PASSE ICI\n");
+                    trouve=1;
+                    break;
+                }
+                tmp1=tmp1->suiv;
+            }
+            if(trouve==0){
+                CellNoeud *voisduprec=malloc(sizeof(CellNoeud));
+                voisduprec->nd=recup;
+                voisduprec->suiv=ajoutp1->voisins;
+                ajoutp1->voisins=voisduprec;
+            }
 
             ajoutp1=recup;
             if(tmpP->suiv==NULL){
