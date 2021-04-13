@@ -1,5 +1,6 @@
 #include "Chaine.h"
 #include "SVGwriter.h"
+#include "Hachage.h"
 
 int main(){
     FILE *fp=NULL;
@@ -27,6 +28,11 @@ int main(){
 
     int nbocc=comptePointsTotal(test);
     printf("Le nombre de points du reseau de la question 1 est : %d\n",nbocc);
+    Reseau * res=reconstitueReseauHachage(test,100);
+    //afficheReseauHSVG(res,"EX4_Q4_5");
+    //afficheReseauHSVG(res,"verification");
+
+
     fclose(fp);
     fclose(fp2);
     return 0;

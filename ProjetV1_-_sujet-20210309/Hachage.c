@@ -1,4 +1,5 @@
 #include "Hachage.h"
+#include "SVGwriter.h"
 
 
 //On utilise la formule de l'enonce
@@ -14,4 +15,146 @@ int foncH(int key, int M){
     //Pour obtenir les parties entieres on cast en int
     res= (int)(M*(key*A-(int)(key*A)));
     return res;
+}
+
+Noeud * rechercheCreeNoeudHachage(Reseau *R, TableHachage *H,double x, double y){
+    int clefH=foncH(foncK(x,y),H->m);
+    if(H->T[clefH]!=NULL){
+        CellNoeud* tmp=H->T[clefH];
+        while(tmp!=NULL){
+            if(tmp->nd->x==x && tmp->nd->y==y){
+                return tmp->nd;
+            }
+            tmp=tmp->suiv;
+        }
+        Noeud * ajout=malloc(sizeof(Noeud));
+        //On peut passer par la table de hachage pour definir le numero
+        //ajout->num=(++H->nbelem);
+        ajout->num=(++R->nbNoeuds);
+        ajout->x=x;
+        ajout->y=y;
+        ajout->voisins=NULL;
+        CellNoeud* ajoutcell=malloc(sizeof(CellNoeud));
+        ajoutcell->nd=ajout;
+        if(R->noeuds!=NULL){
+            ajoutcell->suiv=R->noeuds;
+            R->noeuds=ajoutcell;
+        }else{
+            ajoutcell->suiv=NULL;
+            R->noeuds=ajoutcell;
+        }
+
+        ajoutcell->suiv=H->T[clefH];
+        H->T[clefH]=ajoutcell;
+        return ajout;
+    }else{
+        Noeud * ajout=malloc(sizeof(Noeud));
+        //ajout->num=(++H->nbelem);
+        ajout->num=(++R->nbNoeuds);
+        ajout->x=x;
+        ajout->y=y;
+        ajout->voisins=NULL;
+        CellNoeud* ajoutcell=malloc(sizeof(CellNoeud));
+        ajoutcell->nd=ajout;
+        if(R->noeuds!=NULL){
+            ajoutcell->suiv=R->noeuds;
+           
+        }else{
+            ajoutcell->suiv=NULL;
+            
+        }
+        R->noeuds=ajoutcell;
+
+        H->T[clefH]=ajoutcell;
+        return ajout;
+    }
+}
+
+Reseau* reconstitueReseauHachage(Chaines *C, int M){
+    Reseau * res=malloc(sizeof(Reseau));
+    res->nbNoeuds=0;
+    res->gamma=C->gamma;
+    res->noeuds=NULL;
+    res->commodites=NULL;
+    TableHachage* tabH=malloc(sizeof(TableHachage));
+    tabH->nbelem=0;
+    tabH->m=M;
+    tabH->T=malloc(M*sizeof(CellNoeud*));
+    for(int i=0;i<tabH->m;i++){
+        tabH->T[i]=NULL;
+    }
+    CellChaine *tmpC=C->chaines;
+    while(tmpC){
+        CellPoint *prec=tmpC->points;
+        Noeud * ajoutp1=rechercheCreeNoeudHachage(res,tabH,prec->x,prec->y);
+        CellPoint *tmpP=NULL;
+        Noeud * premiern=ajoutp1;
+        if(prec!=NULL){
+            tmpP=prec->suiv;
+        }
+        Noeud *derniern=NULL;
+        while(tmpP!=NULL){
+            Noeud * recup=rechercheCreeNoeudHachage(res,tabH,tmpP->x,tmpP->y);
+            CellNoeud *vois=malloc(sizeof(CellNoeud));
+            vois->nd=ajoutp1;
+            vois->suiv=recup->voisins;
+            recup->voisins=vois;
+            
+
+            //On ajoute le noeud actuel au voisins du precedent
+            CellNoeud *voisduprec=malloc(sizeof(CellNoeud));
+            voisduprec->nd=recup;
+            voisduprec->suiv=ajoutp1->voisins;
+            ajoutp1->voisins=voisduprec;
+
+            ajoutp1=recup;
+            if(tmpP->suiv==NULL){
+                derniern=recup;
+            }
+            tmpP=tmpP->suiv;
+        }
+
+        //Recupere les noeuds
+        if(premiern!=NULL && derniern!=NULL){
+            CellCommodite* commo= malloc(sizeof(CellCommodite));
+            commo->extrA=premiern;
+            commo->extrB=derniern;
+            if(res->commodites==NULL){
+                commo->suiv=NULL;
+            }else{
+                commo->suiv=res->commodites;
+            }
+            res->commodites=commo;
+        }
+        tmpC=tmpC->suiv;
+    }
+    return res;
+}
+
+void afficheReseauHSVG(Reseau *R, char* nomInstance){
+    CellNoeud *courN,*courv;
+    SVGwriter svg;
+    double maxx=0,maxy=0,minx=1e6,miny=1e6;
+
+    courN=R->noeuds;
+    while (courN!=NULL){
+        if (maxx<courN->nd->x) maxx=courN->nd->x;
+        if (maxy<courN->nd->y) maxy=courN->nd->y;
+        if (minx>courN->nd->x) minx=courN->nd->x;
+        if (miny>courN->nd->y) miny=courN->nd->y;
+        courN=courN->suiv;
+    }
+    SVGinit(&svg,nomInstance,500,500);
+    courN=R->noeuds;
+    while (courN!=NULL){
+        SVGpoint(&svg,500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+        courv=courN->nd->voisins;
+        while (courv!=NULL){
+            if (courv->nd->num<courN->nd->num)
+                SVGline(&svg,500*(courv->nd->x-minx)/(maxx-minx),500*(courv->nd->y-miny)/(maxy-miny),500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+            courv=courv->suiv;
+        }
+        courN=courN->suiv;
+    }
+    SVGfinalize(&svg);
 }

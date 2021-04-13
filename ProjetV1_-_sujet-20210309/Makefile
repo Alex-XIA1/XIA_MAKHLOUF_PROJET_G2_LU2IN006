@@ -4,20 +4,20 @@ EXEC=ChaineMain HachageMain
 
 all: $(EXEC)
 
-ChaineMain: Chaine.o ChaineMain.o SVGwriter.o
-	$(CC) $(CFLAGS) -o ChaineMain Chaine.o SVGwriter.o ChaineMain.o -lm
+ChaineMain: Chaine.o ChaineMain.o SVGwriter.o Hachage.o 
+	$(CC) $(CFLAGS) -o ChaineMain Chaine.o SVGwriter.o ChaineMain.o Hachage.o -lm
 
 Chaine.o: Chaine.c
 	$(CC) $(CFLAGS) -c Chaine.c -lm 
 
-ChaineMain.o: ChaineMain.c SVGwriter.h Chaine.h
+ChaineMain.o: ChaineMain.c SVGwriter.h Chaine.h Hachage.h
 	$(CC) $(CFLAGS) -c ChaineMain.c -lm
 
-SVGwrite.o: SVGwriter.c
+SVGwriter.o: SVGwriter.c
 	$(CC) $(CFLAGS) -c SVGwriter.c -lm
 
-HachageMain: Hachage.o HachageMain.o
-	$(CC) $(CFLAGS) -o HachageMain Hachage.c HachageMain.c
+HachageMain: Hachage.o HachageMain.o SVGwriter.o
+	$(CC) $(CFLAGS) -o HachageMain Hachage.o HachageMain.o SVGwriter.o
 
 Hachage.o: Hachage.c
 	$(CC) $(CFLAGS) -c Hachage.c -lm
