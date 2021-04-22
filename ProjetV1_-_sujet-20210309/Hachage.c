@@ -38,11 +38,10 @@ Noeud * rechercheCreeNoeudHachage(Reseau *R, TableHachage *H,double x, double y)
         ajoutcell->nd=ajout;
         if(R->noeuds!=NULL){
             ajoutcell->suiv=R->noeuds;
-            R->noeuds=ajoutcell;
         }else{
             ajoutcell->suiv=NULL;
-            R->noeuds=ajoutcell;
         }
+        R->noeuds=ajoutcell;
 
         ajoutcell->suiv=H->T[clefH];
         H->T[clefH]=ajoutcell;
