@@ -4,13 +4,13 @@ EXEC=ChaineMain HachageMain
 
 all: $(EXEC)
 
-ChaineMain: Chaine.o ChaineMain.o SVGwriter.o Hachage.o 
-	$(CC) $(CFLAGS) -o ChaineMain Chaine.o SVGwriter.o ChaineMain.o Hachage.o -lm
+ChaineMain: Chaine.o ChaineMain.o SVGwriter.o Hachage.o ArbreQuat.o
+	$(CC) $(CFLAGS) -o ChaineMain Chaine.o SVGwriter.o ChaineMain.o Hachage.o ArbreQuat.o -lm
 
 Chaine.o: Chaine.c
 	$(CC) $(CFLAGS) -c Chaine.c -lm 
 
-ChaineMain.o: ChaineMain.c SVGwriter.h Chaine.h Hachage.h
+ChaineMain.o: ChaineMain.c SVGwriter.h Chaine.h Hachage.h ArbreQuat.h
 	$(CC) $(CFLAGS) -c ChaineMain.c -lm
 
 SVGwriter.o: SVGwriter.c
@@ -24,6 +24,9 @@ Hachage.o: Hachage.c
 
 HachageMain.o : HachageMain.c Hachage.h Reseau.h
 	$(CC) $(CFLAGS) -c HachageMain.c -lm
+
+ArbreQuat.o:ArbreQuat.c
+	$(CC) $(CFLAGS) -c ArbreQuat.c -lm
 
 clean:
 	rm -rf *.o ChaineMain HachageMain
