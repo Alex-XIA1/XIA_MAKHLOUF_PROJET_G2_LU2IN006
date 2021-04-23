@@ -94,3 +94,6 @@ void liberer_reseau(Reseau *r){
     liberer_liste_commodites(r->commodites);
     free(r);
 }
+
+//Exercice 6
+Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax)

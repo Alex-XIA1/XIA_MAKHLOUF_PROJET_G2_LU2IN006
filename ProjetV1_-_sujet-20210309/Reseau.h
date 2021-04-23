@@ -41,5 +41,8 @@ void liberer_noued(Noeud *nd);
 void liberer_liste_noeuds(CellNoeud *lNd);
 void liberer_liste_commodites(CellCommodite *l);
 void liberer_reseau(Reseau *r);
+
+//Exercice 6
+Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax);
 #endif
 
