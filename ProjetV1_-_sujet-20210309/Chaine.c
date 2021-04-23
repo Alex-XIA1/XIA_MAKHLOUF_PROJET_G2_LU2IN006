@@ -272,3 +272,36 @@ void liberer_chaines(Chaines *c){
         free(c);
     }
 }
+
+//Exercice 6
+Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax){
+    Chaines * res =malloc(sizeof(Chaines));
+    res->gamma=3;
+    res->nbChaines=nbChaines;
+    res->chaines=NULL;
+    CellChaine* tmp=NULL;
+    CellPoint* tmpcp=NULL;
+    for(int i=0;i<res->nbChaines;i++){
+        tmp=malloc(sizeof(CellChaine));
+        tmp->numero=(i+1);
+        if(res->chaines!=NULL){
+            tmp->suiv=res->chaines;
+        }else{
+            tmp->suiv=NULL;
+        }
+        for(int j=0;j<nbPointsChaine;j++){
+            tmpcp=malloc(sizeof(CellPoint));
+            tmpcp->x=(rand()%xmax);
+            tmpcp->y=(rand()%ymax);
+            if(tmp->points!=NULL){
+                tmpcp->suiv=tmp->points;
+            }else{
+                tmpcp->suiv=NULL;
+            }
+            tmp->points=tmpcp;
+        }
+        res->chaines=tmp;
+    }
+    
+    return res;
+}

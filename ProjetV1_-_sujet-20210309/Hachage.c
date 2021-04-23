@@ -1,4 +1,5 @@
 #include "Hachage.h"
+#include "Reseau.h"
 #include "SVGwriter.h"
 
 
@@ -170,4 +171,21 @@ void afficheReseauHSVG(Reseau *R, char* nomInstance){
         courN=courN->suiv;
     }
     SVGfinalize(&svg);
+}
+
+//A verifier
+void detruireTableH(TableHachage* cible){
+    CellNoeud* tmp;
+    for(int i = 0;i<cible->m;i++){
+        while(cible->T[i]!=NULL){
+            tmp=cible->T[i];
+            cible->T[i]=cible->T[i]->suiv;
+            //Utilise la fonction de liberation d'un cellnoeud
+            liberer_liste_noeuds(tmp);
+            //liberer les voisins aussi ou pas
+        }
+    }
+    //On oublie pas de liberer le tableau et la structure
+    free(cible->T);
+    free(cible);
 }

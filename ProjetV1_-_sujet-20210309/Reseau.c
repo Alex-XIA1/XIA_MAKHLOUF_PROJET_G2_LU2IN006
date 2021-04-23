@@ -68,15 +68,22 @@ Reseau* reconstitueReseauListe(Chaines *C){
         tmp3->suiv=tmp4;
         tmp3=tmp4;
     }
+    return res;
 }
-void liberer_noued(Noeud *nd){
+void liberer_noeud(Noeud *nd){  
+    CellNoeud *cellcourant;
+    while (nd->voisins){
+        cellcourant = nd->voisins;
+        nd->voisins = nd->voisins->suiv;
+        free(cellcourant);
+    }
     free(nd);
 }
 void liberer_liste_noeuds(CellNoeud *lNd){
     CellNoeud *tmp=NULL;
     while(lNd){
         tmp=lNd->suiv;
-        liberer_noued(lNd->nd);
+        liberer_noeud(lNd->nd);
         free(lNd);
         lNd=tmp;
     }
@@ -95,5 +102,3 @@ void liberer_reseau(Reseau *r){
     free(r);
 }
 
-//Exercice 6
-Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax)

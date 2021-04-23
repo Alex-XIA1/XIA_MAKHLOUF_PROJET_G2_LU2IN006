@@ -332,3 +332,14 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     //printf("Reseau construit avec succes !!!!\n");
     return res;
 }
+
+void detruire_arbre(ArbreQuat *a){
+    if(a!=NULL){
+        detruire_arbre(a->so);
+        detruire_arbre(a->se);
+        detruire_arbre(a->no);
+        detruire_arbre(a->ne);
+        liberer_noeud(a->noeud);
+        free(a);
+    }
+}
