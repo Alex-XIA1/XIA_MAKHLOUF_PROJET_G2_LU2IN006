@@ -44,11 +44,11 @@ Chaines * lectureChaines(FILE* f){
         CellChaine *tmp=malloc(sizeof(CellChaine));
             if(res->chaines==NULL){
                 tmp->suiv=NULL;
-                res->chaines=tmp;
             }else{
                 tmp->suiv=res->chaines;
-                res->chaines=tmp;
+                
             }
+            res->chaines=tmp;
             tmp->numero=num;
             tmp->points=NULL;
         while(tpint>0){
@@ -57,11 +57,12 @@ Chaines * lectureChaines(FILE* f){
                 CellPoint *tmp2=malloc(sizeof(CellPoint));
                 if(tmp->points==NULL){
                     tmp2->suiv=NULL;
-                    tmp->points=tmp2;
+                    
                 }else{
                     tmp2->suiv=tmp->points;
-                    tmp->points=tmp2;
+                    
                 }
+                tmp->points=tmp2;
                 tmp2->x=x;
                 tmp2->y=y;
                 //printf("Valeurs x = %.2f, y = %.2f\n",x,y);
@@ -123,6 +124,12 @@ void ecrireChaines(Chaines *C, FILE *f){
     }
 
 }
+
+
+
+    
+
+
 
 void afficheChainesSVG(Chaines *C, char* nomInstance){
     //int i;
@@ -279,28 +286,34 @@ Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax
     res->gamma=3;
     res->nbChaines=nbChaines;
     res->chaines=NULL;
-    CellChaine* tmp=NULL;
-    CellPoint* tmpcp=NULL;
     for(int i=0;i<res->nbChaines;i++){
-        tmp=malloc(sizeof(CellChaine));
-        tmp->numero=(i+1);
+        CellChaine* tmp=malloc(sizeof(CellChaine));
+        //printf("Je passe\n");
+        
         if(res->chaines!=NULL){
             tmp->suiv=res->chaines;
         }else{
             tmp->suiv=NULL;
         }
+        tmp->numero=i;
+        tmp->points=NULL;
+        res->chaines=tmp;
+        
         for(int j=0;j<nbPointsChaine;j++){
-            tmpcp=malloc(sizeof(CellPoint));
-            tmpcp->x=(rand()%xmax);
-            tmpcp->y=(rand()%ymax);
+            //printf("Ici aussi\n");
+            CellPoint* tmpcp=malloc(sizeof(CellPoint));
+            
             if(tmp->points!=NULL){
                 tmpcp->suiv=tmp->points;
             }else{
                 tmpcp->suiv=NULL;
             }
+            tmpcp->x=((double)(rand()%xmax));
+            tmpcp->y=((double)(rand()%ymax));
             tmp->points=tmpcp;
         }
-        res->chaines=tmp;
+        
+        
     }
     
     return res;

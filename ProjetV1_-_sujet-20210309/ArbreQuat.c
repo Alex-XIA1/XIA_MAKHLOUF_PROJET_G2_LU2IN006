@@ -74,94 +74,60 @@ void insererNoeudArbre(Noeud * n,ArbreQuat** a, ArbreQuat* parent){
         double newxc;
         double newyc;
         //Dans l'ordre des tests so->se->no->ne
-        //printf("Passee l82\n");
-        if(n->x<parent->xc){
-            newxc=(parent->xc)-(parent->coteX/4);
-        }else{
-            newxc=(parent->xc)+(parent->coteX/4);
-        }
-        if(n->y>parent->yc){
-            newyc=(parent->yc)+((parent->coteY)/4);
-        }else{
-            newyc=(parent->yc)-((parent->coteY)/4);
-        }
-        //printf("ALLO ICI\n");
         
-        /*if(n->x<parent->xc && n->y<parent->yc){
+        //Version suivant l'enonce
+        ArbreQuat* ajout;
+        if(n->x<parent->xc && n->y<parent->yc){
             newxc=parent->xc/2;
             newyc=parent->yc/2;
+            ajout=creerArbreQuat(newxc,newyc,newcoteX,newcoteY);
+            ajout->noeud=n;
+            parent->so=ajout;
             //printf("Passee l87\n");
         }else if(n->x>=parent->xc && n->y<parent->yc){
             newxc=parent->xc+parent->xc/2;
             newyc=parent->yc/2;
+            ajout=creerArbreQuat(newxc,newyc,newcoteX,newcoteY);
+            ajout->noeud=n;
+            parent->se=ajout;
             //printf("Passee l91\n");
         }else if(n->x<parent->xc && n->y>=parent->yc){
             newxc=parent->xc/2;
             newyc=parent->yc+parent->yc/2;
+            ajout=creerArbreQuat(newxc,newyc,newcoteX,newcoteY);
+            ajout->noeud=n;
+            parent->no=ajout;
             //printf("Passee l95\n");
         }else if(n->x>=parent->xc && n->y>=parent->yc){
             newxc=parent->xc+parent->xc/2;
             newyc=parent->yc+parent->yc/2;
-        }*/
-        //printf("Passee l96_2\n");
-        //On cree la nouvelle cellule
-        parent=creerArbreQuat(newxc,newyc,newcoteX,newcoteY);
-        //printf("Passee l99_2\n");
-        parent->noeud=n;
-        //printf("les vals parent->xc et yc = %lf et %lf\n",parent->xc,parent->yc);
-        //printf("Passee l100\n");
-        (*a)=parent;
-        //printf("Passee l101\n");
-        return;
+            ajout=creerArbreQuat(newxc,newyc,newcoteX,newcoteY);
+            ajout->noeud=n;
+            parent->ne=ajout;
+        }else{
+            printf("Probleme\n");
+        }
     }else if((*a)->noeud!=NULL){
         //On oublie pas de mettre a jour parent
-        parent=(*a);
         Noeud * ancienN=(*a)->noeud;
         (*a)->noeud=NULL;
         insererNoeudArbre(n,a,parent);
-        parent=(*a);
         insererNoeudArbre(ancienN,a,parent);
-        
-        //Ceci ne marche pas et creer une boucle infinie
-        //meme ordre que pour le cas vide so->se->no->ne
-        /*if(n->x<(*a)->xc && n->y<(*a)->yc){
-            insererNoeudArbre(n,&((*a)->so),parent);
-        }else if(n->x>=(*a)->xc && n->y<(*a)->yc){
-            insererNoeudArbre(n,&((*a)->se),parent);
-        }else if(n->x<(*a)->xc && n->y>=(*a)->yc){
-            insererNoeudArbre(n,&((*a)->no),parent);
-        }else if(n->x>=(*a)->xc && n->y>=(*a)->yc){
-            insererNoeudArbre(n,&((*a)->ne),parent);
-        }
-        printf("Passee l125 et parent->xc et yc= %lf, %lf\n",parent->xc,parent->yc);
-        //On veut aussi inserer l'ancien noeud(attention : fait partie du bloc de la boucle infinie)
-        
-        parent=(*a);
-        (*a)->noeud=NULL;
-        if(n->x<(*a)->xc && n->y<(*a)->yc){
-            insererNoeudArbre(ancienN,&((*a)->so),parent);
-        }else if(n->x>=(*a)->xc && n->y<(*a)->yc){
-            insererNoeudArbre(ancienN,&((*a)->se),parent);
-        }else if(n->x<(*a)->xc && n->y>=(*a)->yc){
-            insererNoeudArbre(ancienN,&((*a)->no),parent);
-        }else if(n->x>=(*a)->xc && n->y>=(*a)->yc){
-            insererNoeudArbre(ancienN,&((*a)->ne),parent);
-        }*/
-        //printf("On sort ?\n");
-        //printf("Passee l127\n");
 
 
     }else if(*a!=NULL && ((*a)->noeud==NULL)){
-        parent=(*a);
-        //printf("Passee l144 et parent->xc et yc= %lf, %lf\n",parent->xc,parent->yc);
+
+        //En partant de l'enonce
         if(n->x<(*a)->xc && n->y<(*a)->yc){
-            insererNoeudArbre(n,&((*a)->so),parent);
+            insererNoeudArbre(n,&((*a)->so),*a);
         }else if(n->x>=(*a)->xc && n->y<(*a)->yc){
-            insererNoeudArbre(n,&((*a)->se),parent);
+            insererNoeudArbre(n,&((*a)->se),*a);
         }else if(n->x<(*a)->xc && n->y>=(*a)->yc){
-            insererNoeudArbre(n,&((*a)->no),parent);
+            insererNoeudArbre(n,&((*a)->no),*a);
         }else if(n->x>=(*a)->xc && n->y>=(*a)->yc){
-            insererNoeudArbre(n,&((*a)->ne),parent);
+            insererNoeudArbre(n,&((*a)->ne),*a);
+        }else{
+            printf("Probleme \n");
         }
         //printf("Passee l239\n");
     }
@@ -175,7 +141,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat* parent,double 
         ajout->num=(++R->nbNoeuds);
         ajout->x=x;
         ajout->y=y;
-        insererNoeudArbre(ajout,a,parent);
+        
         CellNoeud* ajoutcell=malloc(sizeof(CellNoeud));
         ajoutcell->nd=ajout;
         if(R->noeuds!=NULL){
@@ -184,6 +150,8 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat* parent,double 
             ajoutcell->suiv=NULL;
         }
         R->noeuds=ajoutcell;
+        insererNoeudArbre(ajout,a,parent);
+        
         //printf("Passee l146\n");
         return ajout;
     
@@ -198,7 +166,6 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat* parent,double 
         ajout->num=(++R->nbNoeuds);
         ajout->x=x;
         ajout->y=y;
-        parent=(*a);
         //printf("Passee l161\n");
         
         CellNoeud* ajoutcell=malloc(sizeof(CellNoeud));
@@ -212,34 +179,39 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat* parent,double 
         //probleme ici
         //printf("Passee l197\n");
         insererNoeudArbre(ajout,a,parent);
+        
         //printf("Passee l199\n");
         return ajout;
     }else if(*a!=NULL && ((*a)->noeud==NULL)){
         //printf("Passee l164\n");
         Noeud *ajout=NULL;
+        
+        //En partant de l'enonce
         if(x<(*a)->xc && y<(*a)->yc){
-            ajout=rechercheCreeNoeudArbre(R,&((*a)->so),parent,x,y);
+            ajout=rechercheCreeNoeudArbre(R,&((*a)->so),*a,x,y);
         }else if(x>=(*a)->xc && y<(*a)->yc){
-            ajout=rechercheCreeNoeudArbre(R,&((*a)->se),parent,x,y);
+            ajout=rechercheCreeNoeudArbre(R,&((*a)->se),*a,x,y);
         }else if(x<(*a)->xc && y>=(*a)->yc){
-            ajout=rechercheCreeNoeudArbre(R,&((*a)->ne),parent,x,y);
+            ajout=rechercheCreeNoeudArbre(R,&((*a)->ne),*a,x,y);
         }else if(x>=(*a)->xc && y>=(*a)->yc){
-            ajout=rechercheCreeNoeudArbre(R,&((*a)->no),parent,x,y);
+            ajout=rechercheCreeNoeudArbre(R,&((*a)->no),*a,x,y);
         }else{
             //ne doit pas passer ici
-            //printf("Que se passe t il\n");
+            printf("Que se passe t il\n");
             return ajout;
         }
-        //printf("Passee l179\n");
+
         return ajout;
+        //printf("Passee l179\n");
+        
     }else{
-        //printf("Que se passe t il 2\n");
+        printf("Que se passe t il 2\n");
         return NULL;
     }
 }
 
 Reseau* reconstitueReseauArbre(Chaines* C){
-    Noeud *recup;
+    
     Reseau *res=malloc(sizeof(Reseau));
     res->nbNoeuds=0;
     res->gamma=C->gamma;
@@ -259,7 +231,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     ArbreQuat* abQ=creerArbreQuat(((xmax)+(xmin))/2,((ymax)+(ymin))/2,xmax-xmin,ymax-ymin);
     ArbreQuat* tmpab=abQ;
     ArbreQuat* parent=abQ;
-    //printf("Passee\n");
+
 
     CellChaine *tmpC=C->chaines;
     while(tmpC){
@@ -267,6 +239,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         parent=abQ;
         CellPoint *prec=tmpC->points;
         Noeud * ajoutp1=rechercheCreeNoeudArbre(res,&tmpab,parent,prec->x,prec->y);
+        //printf("val de recup %lf et %lf\n",ajoutp1->x,ajoutp1->y);
         CellPoint *tmpP=NULL;
         Noeud * premiern=ajoutp1;
         //printf("Passee l211\n");
@@ -277,9 +250,11 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         Noeud *derniern=NULL;
         //printf("Passee l217\n");
         while(tmpP!=NULL){
+
             //On ajoute le precedent aux voisins du noeud actuel
             //printf("Passee l220\n");
-            recup=rechercheCreeNoeudArbre(res,&tmpab,parent,tmpP->x,tmpP->y);
+            Noeud* recup=rechercheCreeNoeudArbre(res,&tmpab,parent,tmpP->x,tmpP->y);
+            //printf("val de recup %lf et %lf\n",recup->x,recup->y);
             //printf("Passee l222\n");
             CellNoeud *vois=malloc(sizeof(CellNoeud));
             vois->nd=ajoutp1;
@@ -330,6 +305,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         tmpC=tmpC->suiv;
     }
     //printf("Reseau construit avec succes !!!!\n");
+    
     return res;
 }
 
@@ -339,7 +315,34 @@ void detruire_arbre(ArbreQuat *a){
         detruire_arbre(a->se);
         detruire_arbre(a->no);
         detruire_arbre(a->ne);
-        liberer_noeud(a->noeud);
         free(a);
     }
+}
+
+void afficheReseauSVG(Reseau *R, char* nomInstance){
+    CellNoeud *courN,*courv;
+    SVGwriter svg;
+    double maxx=0,maxy=0,minx=1e6,miny=1e6;
+
+    courN=R->noeuds;
+    while (courN!=NULL){
+        if (maxx<courN->nd->x) maxx=courN->nd->x;
+        if (maxy<courN->nd->y) maxy=courN->nd->y;
+        if (minx>courN->nd->x) minx=courN->nd->x;
+        if (miny>courN->nd->y) miny=courN->nd->y;
+        courN=courN->suiv;
+    }
+    SVGinit(&svg,nomInstance,500,500);
+    courN=R->noeuds;
+    while (courN!=NULL){
+        SVGpoint(&svg,500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+        courv=courN->nd->voisins;
+        while (courv!=NULL){
+            if (courv->nd->num<courN->nd->num)
+                SVGline(&svg,500*(courv->nd->x-minx)/(maxx-minx),500*(courv->nd->y-miny)/(maxy-miny),500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
+            courv=courv->suiv;
+        }
+        courN=courN->suiv;
+    }
+    SVGfinalize(&svg);
 }

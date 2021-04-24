@@ -10,7 +10,7 @@ ChaineMain: Chaine.o ChaineMain.o SVGwriter.o Hachage.o ArbreQuat.o Reseau.o
 Chaine.o: Chaine.c
 	$(CC) $(CFLAGS) -c Chaine.c -lm 
 
-ChaineMain.o: ChaineMain.c SVGwriter.h Chaine.h Hachage.h ArbreQuat.h Reseau.h
+ChaineMain.o: ChaineMain.c SVGwriter.h Chaine.h Hachage.h ArbreQuat.h Reseau.h 
 	$(CC) $(CFLAGS) -c ChaineMain.c -lm
 
 Reseau.o: Reseau.c

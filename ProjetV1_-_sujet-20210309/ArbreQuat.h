@@ -7,6 +7,7 @@
 #include <time.h>
 #include "Chaine.h"
 #include "Reseau.h"
+#include "SVGwriter.h"
 
 /* Arbre quaternaire contenant les noeuds du reseau */
 typedef struct arbreQuat{
@@ -26,5 +27,6 @@ void insererNoeudArbre(Noeud * n,ArbreQuat** a, ArbreQuat* parent);
 Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat* parent,double x,double y);
 Reseau* reconstitueReseauArbre(Chaines* C);
 void detruire_arbre(ArbreQuat *a);
+void afficheReseauSVG(Reseau *R, char* nomInstance);
 
 #endif
