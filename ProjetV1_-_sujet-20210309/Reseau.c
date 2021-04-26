@@ -1,12 +1,10 @@
 #include "Reseau.h"
+#include "Chaine.h"
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     CellNoeud *tmp=R->noeuds;
     Noeud *res=NULL;
     while(tmp!=NULL){
-        printf("r_x: %f\n",tmp->nd->x);
-        printf("r_y: %f\n",tmp->nd->y);
-        printf("x=%f : y=%f\n",x,y);
-        printf("------------------\n");
+        //printf("je suis ici\n");
         //printf("x_suiv :%f , y_suiv :%f\n",tmp->suiv->nd->x,tmp->suiv->nd->y);
         if(tmp->nd->x==x && tmp->nd->y==y){ // Si on trouve le noeud correspondant
             printf("Passe\n");
@@ -75,7 +73,6 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
         tmp3->suiv=tmp4;
         tmp3=tmp4;
     }
-<<<<<<< HEAD
 }*/
 void ajouteVoisinDebut(Noeud *n, CellNoeud *v){
     if(n->voisins==NULL){
@@ -106,7 +103,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
         CellNoeud *prec=NULL;
         //printf("passe1\n");
         n=rechercheCreeNoeudListe(res,tmp2->x,tmp2->y);
-        //printf("passe2\n");
+        printf("passe recherche\n");
         prec=res->noeuds;
         c=(CellCommodite *)malloc(sizeof(CellCommodite));
             if(c==NULL){
@@ -117,9 +114,9 @@ Reseau* reconstitueReseauListe(Chaines *C){
         tmp2=tmp2->suiv;
         while(tmp2){
             //printf("it: %d\n",cpt);
-            printf("passe1\n");
+            printf("debut r2\n");
             n=rechercheCreeNoeudListe(res,tmp2->x,tmp2->y);
-            printf("passe2\n");
+            printf("fin r2\n");
             ajouteVoisinDebut(n,prec);
             ajouteVoisinDebut(prec->nd,res->noeuds);
             prec=res->noeuds;
@@ -136,7 +133,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
     return res;
 }
 
-void liberer_noued(Noeud *nd){
+void liberer_noeud(Noeud *nd){
     if(nd){
         CellNoeud *tmp=nd->voisins;
         CellNoeud *tmp2=NULL;
@@ -147,18 +144,6 @@ void liberer_noued(Noeud *nd){
         }
         free(nd);
     }
-=======
-    return res;
-}
-void liberer_noeud(Noeud *nd){  
-    CellNoeud *cellcourant;
-    while (nd->voisins){
-        cellcourant = nd->voisins;
-        nd->voisins = nd->voisins->suiv;
-        free(cellcourant);
-    }
-    free(nd);
->>>>>>> 114841a192d317d4f08291cee71592152c3c41cc
 }
 void liberer_liste_noeuds(CellNoeud *lNd){
     CellNoeud *tmp=NULL;
@@ -183,7 +168,6 @@ void liberer_reseau(Reseau *r){
     free(r);
 }
 
-<<<<<<< HEAD
 /*int nbCommodites(Reseau *R){
     int cpt=0;
     CellCommodite *c=R->commodites;
@@ -291,5 +275,3 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
     }
     SVGfinalize(&svg);
 }*/
-=======
->>>>>>> 114841a192d317d4f08291cee71592152c3c41cc
