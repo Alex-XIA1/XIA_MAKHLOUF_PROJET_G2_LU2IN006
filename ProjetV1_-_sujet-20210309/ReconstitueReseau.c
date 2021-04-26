@@ -40,6 +40,7 @@ int main(){
     }
     Chaines *liste=lectureChaines(pf);
     Reseau *res=reconstitueReseauListe(liste);
+    afficheReseauSVGL2(res, "testEx2");
     liberer_reseau(res);
     liberer_chaines(liste);
     fclose(pf);
