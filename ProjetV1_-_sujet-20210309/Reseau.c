@@ -75,6 +75,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
         tmp3->suiv=tmp4;
         tmp3=tmp4;
     }
+<<<<<<< HEAD
 }*/
 void ajouteVoisinDebut(Noeud *n, CellNoeud *v){
     if(n->voisins==NULL){
@@ -146,12 +147,24 @@ void liberer_noued(Noeud *nd){
         }
         free(nd);
     }
+=======
+    return res;
+}
+void liberer_noeud(Noeud *nd){  
+    CellNoeud *cellcourant;
+    while (nd->voisins){
+        cellcourant = nd->voisins;
+        nd->voisins = nd->voisins->suiv;
+        free(cellcourant);
+    }
+    free(nd);
+>>>>>>> 114841a192d317d4f08291cee71592152c3c41cc
 }
 void liberer_liste_noeuds(CellNoeud *lNd){
     CellNoeud *tmp=NULL;
     while(lNd){
         tmp=lNd->suiv;
-        liberer_noued(lNd->nd);
+        liberer_noeud(lNd->nd);
         free(lNd);
         lNd=tmp;
     }
@@ -170,6 +183,7 @@ void liberer_reseau(Reseau *r){
     free(r);
 }
 
+<<<<<<< HEAD
 /*int nbCommodites(Reseau *R){
     int cpt=0;
     CellCommodite *c=R->commodites;
@@ -277,3 +291,5 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
     }
     SVGfinalize(&svg);
 }*/
+=======
+>>>>>>> 114841a192d317d4f08291cee71592152c3c41cc

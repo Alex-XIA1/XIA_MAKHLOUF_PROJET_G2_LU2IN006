@@ -18,5 +18,6 @@ int foncH(int key, int m);
 Noeud * rechercheCreeNoeudHachage (Reseau * R, TableHachage* H, double x, double y);
 Reseau * reconstitueReseauHachage(Chaines *C, int M);
 void afficheReseauHSVG(Reseau *R, char* nomInstance);
+void detruireTableH(TableHachage* cible);
 
 #endif

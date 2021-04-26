@@ -4,6 +4,7 @@
 #include<stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <time.h>
 
 /* Liste chainee de points */
 typedef struct cellPoint{
@@ -31,5 +32,9 @@ void afficheChainesSVG(Chaines *C, char* nomInstance);
 double longueurChaine(CellChaine *c);
 double longueurTotale(Chaines *C);
 int comptePointsTotal(Chaines *C);
-void liberer_point(CellPoint *p);
+void liberer_liste_points(CellPoint *p);
+void liberer_cellChaine(CellChaine *c);
+void liberer_chaines(Chaines *c);
+//Exercice 6
+Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax);
 #endif	

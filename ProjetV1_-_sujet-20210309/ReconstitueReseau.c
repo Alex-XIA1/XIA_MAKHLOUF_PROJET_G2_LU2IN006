@@ -1,19 +1,20 @@
 #include "Reseau.h"
-int main(int argc,char *argv[]){
-    printf("Bonjour et Bienvenu\n");
-    printf("Veuillez saisir le nom du fichier a lire ainsi que la methode de votre choix parmi les suivantes\n");
+#include "Chaine.h"
+#define LONGUEURE_LIGNE 256
+int main(){
+    /*printf("Bonjour et Bienvenu\n");
+    printf("Veuillez saisir la methode de votre choix parmi les suivantes\n");
     printf("Liste chainne : tapez 1\ntable de hachage : tapez 2\narbres : tapez 3\n ");
-    if(argc!=3){
-        printf("Nombre de parametres incorrects\nVeuillez joindre le nom du fichier ainsi que le numero de la methode\n");
-        exit(-1);
-    }
+    char buffer[LONGUEURE_LIGNE];
+    int choix;
+    fgets(buffer,LONGUEURE_LIGNE,stdin);
+    sscanf(buffer,"%d",&choix);
     FILE *pf=fopen("00014_burma.cha","r");
-    Chaines*liste=lectureChaines(pf);
     if(pf==NULL){
         printf("Erreur d'ouverture du fichier\n");
         exit(-1);
     }
-    int choix=atoi(argv[1]);
+    Chaines*liste=lectureChaines(pf);
     switch (choix){
         case 1:
             printf("Votre choix: Liste chainee\n");
@@ -29,6 +30,18 @@ int main(int argc,char *argv[]){
             exit(-1);
             break;
     }
+    liberer_chaines(liste);
+    fclose(pf);*/
+    //printf("go\n");
+    FILE *pf=fopen("00014_burma.cha","r");
+    if(pf==NULL){
+        printf("Erreur d'ouverture du fichier\n");
+        exit(-1);
+    }
+    Chaines *liste=lectureChaines(pf);
+    Reseau *res=reconstitueReseauListe(liste);
+    liberer_reseau(res);
+    liberer_chaines(liste);
     fclose(pf);
     return 0;
 }

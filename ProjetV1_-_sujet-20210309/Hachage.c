@@ -1,4 +1,5 @@
 #include "Hachage.h"
+#include "Reseau.h"
 #include "SVGwriter.h"
 
 
@@ -38,11 +39,10 @@ Noeud * rechercheCreeNoeudHachage(Reseau *R, TableHachage *H,double x, double y)
         ajoutcell->nd=ajout;
         if(R->noeuds!=NULL){
             ajoutcell->suiv=R->noeuds;
-            R->noeuds=ajoutcell;
         }else{
             ajoutcell->suiv=NULL;
-            R->noeuds=ajoutcell;
         }
+        R->noeuds=ajoutcell;
 
         ajoutcell->suiv=H->T[clefH];
         H->T[clefH]=ajoutcell;
@@ -171,4 +171,22 @@ void afficheReseauHSVG(Reseau *R, char* nomInstance){
         courN=courN->suiv;
     }
     SVGfinalize(&svg);
+}
+
+//A verifier
+void detruireTableH(TableHachage* cible){
+    //On libere les noeuds a partir du reseau on peut ainsi ignorer la liberation des noeuds de la table
+    //CellNoeud* tmp;
+    /*for(int i = 0;i<cible->m;i++){
+        while(cible->T[i]!=NULL){
+            tmp=cible->T[i];
+            cible->T[i]=cible->T[i]->suiv;
+            //Utilise la fonction de liberation d'un cellnoeud
+            free(tmp);
+            //liberer les voisins aussi ou pas
+        }
+    }*/
+    //On oublie pas de liberer le tableau et la structure
+    //free(cible->T);
+    free(cible);
 }
