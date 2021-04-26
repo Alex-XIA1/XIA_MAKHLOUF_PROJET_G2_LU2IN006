@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-W -Wall -pedantic
-EXEC=ChaineMain HachageMain
+EXEC=ChaineMain HachageMain ReconstitueReseau
 
 all: $(EXEC)
 
@@ -25,5 +25,14 @@ Hachage.o: Hachage.c
 HachageMain.o : HachageMain.c Hachage.h Reseau.h
 	$(CC) $(CFLAGS) -c HachageMain.c -lm
 
+Reseau.o: Reseau.c Reseau.h
+	$(CC) $(CFLAGS) -c Reseau.c
+
+ReconstitueReseau: ReconstitueReseau.o Reseau.o Chaine.o SVGwriter.o
+	$(CC) $(CFLAGS) -o ReconstitueReseau ReconstitueReseau.o Reseau.o Chaine.o SVGwriter.o -lm 
+
+ReconstitueReseau.o: ReconstitueReseau.c Reseau.h Chaine.h 
+	$(CC) $(CFLAGS) -c ReconstitueReseau.c -lm
+
 clean:
-	rm -rf *.o ChaineMain HachageMain
+	rm -rf *.o ChaineMain HachageMain ReconstitueReseau
