@@ -4,10 +4,6 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     CellNoeud *tmp=R->noeuds;
     Noeud *res=NULL;
     while(tmp!=NULL){
-        printf("r_x: %f\n",tmp->nd->x);
-        printf("r_y: %f\n",tmp->nd->y);
-        printf("x=%f : y=%f\n",x,y);
-        printf("------------------\n");
         //printf("x_suiv :%f , y_suiv :%f\n",tmp->suiv->nd->x,tmp->suiv->nd->y);
         if(tmp->nd->x==x && tmp->nd->y==y){ // Si on trouve le noeud correspondant
             printf("Passe\n");
@@ -49,6 +45,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
     res->nbNoeuds=0; // Nombre de noeuds du reseau est initialement null
     res->noeuds=NULL;
     res->commodites=NULL;
+<<<<<<< HEAD
     CellChaine * tmp1=C->chaines; // Liste chainee des chaines
     CellCommodite *c=res->commodites;
     Noeud *n=NULL;
@@ -61,48 +58,66 @@ Reseau* reconstitueReseauListe(Chaines *C){
         if(c==NULL){
             printf("Erreur d'allocation memoire\n");
             return NULL;
+=======
+    CellChaine * tmpC=C->chaines; // Liste chainee des chaines
+    while(tmpC){ // Parcours de la liste des chaines
+        CellPoint *prec=tmpC->points;
+        Noeud * n=rechercheCreeNoeudListe(res,prec->x,prec->y);
+        CellPoint *tmpP=NULL;
+        Noeud * premiern=n;
+        if(prec!=NULL){
+            tmpP=prec->suiv;
+>>>>>>> 80557664257d043635e4afa009f02541af73d0a0
         }
-        c->extrA=n;
-        while(tmp2->suiv){ // Parcours de la liste des points
-            CellPoint *p_suiv=tmp2->suiv;
-            Noeud *n_suiv=rechercheCreeNoeudListe(res,p_suiv->x,p_suiv->y);
-            //Maj voisinage
-            CellNoeud *n_voisins=n->voisins;
-            while(n_voisins!=NULL && n_voisins->nd->num!=n_suiv->num){
-                n_voisins=n_voisins->suiv;
-            }
-            if(n_voisins==NULL){
-                CellNoeud *v=(CellNoeud *)malloc(sizeof(CellNoeud));
-                if(v==NULL){
-                    printf("Erreur d'allocation memoire\n");
-                    return NULL;
+        Noeud *derniern=NULL;
+        while(tmpP!=NULL){
+            Noeud * recup=rechercheCreeNoeudListe(res,tmpP->x,tmpP->y);
+            CellNoeud *vois=malloc(sizeof(CellNoeud));
+            vois->nd=n;
+            vois->suiv=recup->voisins;
+            recup->voisins=vois;
+            
+
+            //On ajoute le noeud actuel au voisins du precedent
+            //On veut eviter les doublons on parcourt donc la liste des voisins du precedent
+            //on parcours les voisins de n
+            CellNoeud *tmp1=n->voisins;
+            int trouve=0;
+            while(tmp1!=NULL){
+                if(tmp1->nd==recup){
+                    //printf("JE PASSE ICI\n");
+                    trouve=1;
+                    break;
                 }
-                v->nd=n_suiv;
-                v->suiv=n->voisins;
-                n->voisins=v;
-                
+                tmp1=tmp1->suiv;
             }
-            // Maj voisinage
-            CellNoeud *suiv_voisins=n_suiv->voisins;
-            while(suiv_voisins!=NULL && suiv_voisins->nd->num!=n->num){
-                suiv_voisins=suiv_voisins->suiv;
+            if(trouve==0){
+                CellNoeud *voisduprec=malloc(sizeof(CellNoeud));
+                voisduprec->nd=recup;
+                voisduprec->suiv=n->voisins;
+                n->voisins=voisduprec;
             }
-            if(suiv_voisins==NULL){
-                CellNoeud *suiv_v=(CellNoeud *)malloc(sizeof(CellNoeud));
-                if(suiv_v==NULL){
-                    printf("Erreur d'allocation memoire\n");
-                    return NULL;
-                }
-                suiv_v->nd=n;
-                suiv_v->suiv=n_suiv->voisins;
-                n_suiv->voisins=suiv_v;
+
+            n=recup;
+            if(tmpP->suiv==NULL){
+                derniern=recup;
             }
-            tmp3=tmp2;
-            tmp2=tmp2->suiv;
+
+            
+            tmpP=tmpP->suiv;
         }
-        c->extrB=rechercheCreeNoeudListe(res,tmp3->x,tmp3->y);
-        c=c->suiv;
-        tmp1=tmp1->suiv;
+        if(premiern!=NULL && derniern!=NULL){
+            CellCommodite* commo= malloc(sizeof(CellCommodite));
+            commo->extrA=premiern;
+            commo->extrB=derniern;
+            if(res->commodites==NULL){
+                commo->suiv=NULL;
+            }else{
+                commo->suiv=res->commodites;
+            }
+            res->commodites=commo;
+        }
+        tmpC=tmpC->suiv;
     }
     return res;
 }
@@ -231,7 +246,13 @@ void ecrireReseau(Reseau *R, FILE *f){
         printf("Fichier passe en parametre non ouvert");
     }
 }
+<<<<<<< HEAD
 void afficheReseauSVG2(Reseau *R, char* nomInstance){
+=======
+
+
+void afficheReseauSVGL2(Reseau *R, char* nomInstance){
+>>>>>>> 80557664257d043635e4afa009f02541af73d0a0
     CellNoeud *courN,*courv;
     SVGwriter svg;
     double maxx=0,maxy=0,minx=1e6,miny=1e6;
