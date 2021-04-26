@@ -2,6 +2,7 @@
 #define __RESEAU_H__
 #include "Chaine.h"
 #include <stdlib.h>
+#include <stdio.h>
 typedef struct noeud Noeud;
 
 /* Liste chainee de noeuds (pour la liste des noeuds du reseau ET les listes des voisins de chaque noeud) */
