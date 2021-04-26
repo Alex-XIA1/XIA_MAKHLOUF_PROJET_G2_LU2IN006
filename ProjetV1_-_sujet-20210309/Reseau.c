@@ -1,4 +1,5 @@
 #include "Reseau.h"
+#include "SVGwriter.h"
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     CellNoeud *tmp=R->noeuds;
     Noeud *res=NULL;
@@ -49,7 +50,6 @@ Reseau* reconstitueReseauListe(Chaines *C){
     res->noeuds=NULL;
     res->commodites=NULL;
     CellChaine * tmp1=C->chaines; // Liste chainee des chaines
-    int cpt=0;
     CellCommodite *c=res->commodites;
     Noeud *n=NULL;
     CellPoint *tmp3=NULL;
@@ -107,7 +107,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
     return res;
 }
 
-void liberer_noued(Noeud *nd){
+/*void liberer_noued(Noeud *nd){
     if(nd){
         CellNoeud *tmp=nd->voisins;
         CellNoeud *tmp2=NULL;
@@ -118,7 +118,7 @@ void liberer_noued(Noeud *nd){
         }
         free(nd);
     }
-}
+}*/
 void liberer_noeud(Noeud *nd){  
     CellNoeud *cellcourant;
     while (nd->voisins){
@@ -231,7 +231,7 @@ void ecrireReseau(Reseau *R, FILE *f){
         printf("Fichier passe en parametre non ouvert");
     }
 }
-/*void afficheReseauSVG(Reseau *R, char* nomInstance){
+void afficheReseauSVG2(Reseau *R, char* nomInstance){
     CellNoeud *courN,*courv;
     SVGwriter svg;
     double maxx=0,maxy=0,minx=1e6,miny=1e6;
@@ -257,4 +257,4 @@ void ecrireReseau(Reseau *R, FILE *f){
         courN=courN->suiv;
     }
     SVGfinalize(&svg);
-}*/
+}
