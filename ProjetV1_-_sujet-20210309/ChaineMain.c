@@ -18,7 +18,7 @@ int main(){
     Chaines* test=NULL;
     test=lectureChaines(fp);
     //printf("gamma = %d\n",test->gamma);
-
+    //liberer_chaines(test);
     //On commente ecrireChaines et afficheCHainesSVG pour eviter la recreation a chaque execution
     //ecrireChaines(test,fp2);
 
