@@ -37,46 +37,6 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     R->nbNoeuds++;
     return res;
 }
-/*Reseau* reconstitueReseauListe(Chaines *C){
-    CellChaine *tmp1=C->chaines;
-    Reseau *res=(Reseau*)malloc(sizeof(Reseau));
-    if(res==NULL){
-        printf("Erreur d'allocation memoire\n");
-        return NULL;
-    }
-    res->gamma=C->gamma; // Nombre maximale de fibres inchangeable
-    res->nbNoeuds=0; // Initialement le nombre de noeud est egale a 0
-    Noeud *tmp2=rechercheCreeNoeudListe(res,tmp1->points->x,tmp1->points->y);
-    res->commodites=(CellCommodite *)malloc(sizeof(CellCommodite));
-    res->commodites->extrA=NULL;
-    res->commodites->extrB=NULL;
-    if(res->commodites==NULL){
-         printf("Erreur d'allocation memoire\n");
-         return NULL;
-    }
-    CellCommodite *tmp3=res->commodites;
-    tmp1->points=tmp1->points->suiv;
-    for( int i=0 ; i< C->nbChaines ; i++){
-        tmp3->extrA=tmp2; // Premier point de la chaine est le premier point de la commodite
-        while(tmp1->points){
-            tmp2=rechercheCreeNoeudListe(res,tmp1->points->x,tmp1->points->y);
-            if(tmp1->points->suiv==NULL){ // Si c'est le dernier point
-                tmp3->extrB=tmp2; // On complete la commodite actuelle
-            }
-            tmp1->points=tmp1->points->suiv;
-        }
-        tmp1=tmp1->suiv;
-        CellCommodite *tmp4=(CellCommodite *)malloc(sizeof(CellCommodite));
-        if(tmp4==NULL){
-            printf("Erreur d'allocation memoire\n");
-            return NULL;
-        }
-        tmp4->extrA=NULL;
-        tmp4->extrB=NULL;
-        tmp3->suiv=tmp4;
-        tmp3=tmp4;
-    }
-}*/
 
 Reseau* reconstitueReseauListe(Chaines *C){
     Reseau * res=(Reseau *)malloc(sizeof(Reseau));
@@ -191,7 +151,7 @@ void liberer_reseau(Reseau *r){
     free(r);
 }
 
-/*int nbCommodites(Reseau *R){
+int nbCommodites(Reseau *R){
     int cpt=0;
     CellCommodite *c=R->commodites;
     while(c){
@@ -271,7 +231,7 @@ void ecrireReseau(Reseau *R, FILE *f){
         printf("Fichier passe en parametre non ouvert");
     }
 }
-void afficheReseauSVG(Reseau *R, char* nomInstance){
+/*void afficheReseauSVG(Reseau *R, char* nomInstance){
     CellNoeud *courN,*courv;
     SVGwriter svg;
     double maxx=0,maxy=0,minx=1e6,miny=1e6;
