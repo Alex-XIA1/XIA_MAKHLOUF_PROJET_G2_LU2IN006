@@ -93,7 +93,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
     CellCommodite *c=res->commodites;
     Noeud *n=NULL;
     CellPoint *tmp3=NULL;
-    while(tmp1){
+    while(tmp1){ // Parcours de la liste des chaines
         printf("debut\n");
         CellPoint *tmp2=tmp1->points; // Liste des points de chaque chaine
         n=rechercheCreeNoeudListe(res,tmp2->x,tmp2->y);
@@ -103,9 +103,10 @@ Reseau* reconstitueReseauListe(Chaines *C){
             return NULL;
         }
         c->extrA=n;
-        while(tmp2->suiv){
+        while(tmp2->suiv){ // Parcours de la liste des points
             CellPoint *p_suiv=tmp2->suiv;
             Noeud *n_suiv=rechercheCreeNoeudListe(res,p_suiv->x,p_suiv->y);
+            //Maj voisinage
             CellNoeud *n_voisins=n->voisins;
             while(n_voisins!=NULL && n_voisins->nd->num!=n_suiv->num){
                 n_voisins=n_voisins->suiv;
@@ -121,6 +122,7 @@ Reseau* reconstitueReseauListe(Chaines *C){
                 n->voisins=v;
                 
             }
+            // Maj voisinage
             CellNoeud *suiv_voisins=n_suiv->voisins;
             while(suiv_voisins!=NULL && suiv_voisins->nd->num!=n->num){
                 suiv_voisins=suiv_voisins->suiv;
