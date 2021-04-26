@@ -11,6 +11,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
         if(tmp->nd->x==x && tmp->nd->y==y){ // Si on trouve le noeud correspondant
             printf("Passe\n");
             res=tmp->nd;
+            printf("%f : %f\n",res->x,res->y);
             return res;
         }
         tmp=tmp->suiv;
@@ -75,16 +76,8 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
         tmp3->suiv=tmp4;
         tmp3=tmp4;
     }
-<<<<<<< HEAD
 }*/
-void ajouteVoisinDebut(Noeud *n, CellNoeud *v){
-    if(n->voisins==NULL){
-        n->voisins=v;
-    }else{
-        v->suiv=n->voisins;
-        n->voisins=v;
-    }
-}
+
 Reseau* reconstitueReseauListe(Chaines *C){
     Reseau * res=(Reseau *)malloc(sizeof(Reseau));
     if(res==NULL){
@@ -99,39 +92,55 @@ Reseau* reconstitueReseauListe(Chaines *C){
     int cpt=0;
     CellCommodite *c=res->commodites;
     Noeud *n=NULL;
+    CellPoint *tmp3=NULL;
     while(tmp1){
         printf("debut\n");
         CellPoint *tmp2=tmp1->points; // Liste des points de chaque chaine
-        CellPoint *tmp3=NULL;
-        CellNoeud *prec=NULL;
-        //printf("passe1\n");
         n=rechercheCreeNoeudListe(res,tmp2->x,tmp2->y);
-        //printf("passe2\n");
-        prec=res->noeuds;
         c=(CellCommodite *)malloc(sizeof(CellCommodite));
-            if(c==NULL){
-                printf("Erreur d'allocation\n");
-                return NULL;
-            }
+        if(c==NULL){
+            printf("Erreur d'allocation memoire\n");
+            return NULL;
+        }
         c->extrA=n;
-        tmp2=tmp2->suiv;
-        while(tmp2){
-            //printf("it: %d\n",cpt);
-            printf("passe1\n");
-            n=rechercheCreeNoeudListe(res,tmp2->x,tmp2->y);
-            printf("passe2\n");
-            ajouteVoisinDebut(n,prec);
-            ajouteVoisinDebut(prec->nd,res->noeuds);
-            prec=res->noeuds;
+        while(tmp2->suiv){
+            CellPoint *p_suiv=tmp2->suiv;
+            Noeud *n_suiv=rechercheCreeNoeudListe(res,p_suiv->x,p_suiv->y);
+            CellNoeud *n_voisins=n->voisins;
+            while(n_voisins!=NULL && n_voisins->nd->num!=n_suiv->num){
+                n_voisins=n_voisins->suiv;
+            }
+            if(n_voisins==NULL){
+                CellNoeud *v=(CellNoeud *)malloc(sizeof(CellNoeud));
+                if(v==NULL){
+                    printf("Erreur d'allocation memoire\n");
+                    return NULL;
+                }
+                v->nd=n_suiv;
+                v->suiv=n->voisins;
+                n->voisins=v;
+                
+            }
+            CellNoeud *suiv_voisins=n_suiv->voisins;
+            while(suiv_voisins!=NULL && suiv_voisins->nd->num!=n->num){
+                suiv_voisins=suiv_voisins->suiv;
+            }
+            if(suiv_voisins==NULL){
+                CellNoeud *suiv_v=(CellNoeud *)malloc(sizeof(CellNoeud));
+                if(suiv_v==NULL){
+                    printf("Erreur d'allocation memoire\n");
+                    return NULL;
+                }
+                suiv_v->nd=n;
+                suiv_v->suiv=n_suiv->voisins;
+                n_suiv->voisins=suiv_v;
+            }
             tmp3=tmp2;
             tmp2=tmp2->suiv;
-            //printf("fin it: %d\n",cpt);
         }
         c->extrB=rechercheCreeNoeudListe(res,tmp3->x,tmp3->y);
-        cpt++;
-        tmp1=tmp1->suiv;
         c=c->suiv;
-        printf("fin\n");
+        tmp1=tmp1->suiv;
     }
     return res;
 }
@@ -147,8 +156,6 @@ void liberer_noued(Noeud *nd){
         }
         free(nd);
     }
-=======
-    return res;
 }
 void liberer_noeud(Noeud *nd){  
     CellNoeud *cellcourant;
@@ -158,7 +165,6 @@ void liberer_noeud(Noeud *nd){
         free(cellcourant);
     }
     free(nd);
->>>>>>> 114841a192d317d4f08291cee71592152c3c41cc
 }
 void liberer_liste_noeuds(CellNoeud *lNd){
     CellNoeud *tmp=NULL;
@@ -183,7 +189,6 @@ void liberer_reseau(Reseau *r){
     free(r);
 }
 
-<<<<<<< HEAD
 /*int nbCommodites(Reseau *R){
     int cpt=0;
     CellCommodite *c=R->commodites;
@@ -291,5 +296,3 @@ void afficheReseauSVG(Reseau *R, char* nomInstance){
     }
     SVGfinalize(&svg);
 }*/
-=======
->>>>>>> 114841a192d317d4f08291cee71592152c3c41cc
