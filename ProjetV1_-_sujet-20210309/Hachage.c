@@ -142,6 +142,8 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
         }
         tmpC=tmpC->suiv;
     }
+    //Afin de pouvoir bien faire les tests de vitesse, on devra commenter la fonction de liberation
+    detruireTableH(tabH);
     return res;
 }
 
@@ -176,17 +178,6 @@ void afficheReseauHSVG(Reseau *R, char* nomInstance){
 //A verifier
 void detruireTableH(TableHachage* cible){
     //On libere les noeuds a partir du reseau on peut ainsi ignorer la liberation des noeuds de la table
-    //CellNoeud* tmp;
-    /*for(int i = 0;i<cible->m;i++){
-        while(cible->T[i]!=NULL){
-            tmp=cible->T[i];
-            cible->T[i]=cible->T[i]->suiv;
-            //Utilise la fonction de liberation d'un cellnoeud
-            free(tmp);
-            //liberer les voisins aussi ou pas
-        }
-    }*/
-    //On oublie pas de liberer le tableau et la structure
-    //free(cible->T);
+    free(cible->T);
     free(cible);
 }

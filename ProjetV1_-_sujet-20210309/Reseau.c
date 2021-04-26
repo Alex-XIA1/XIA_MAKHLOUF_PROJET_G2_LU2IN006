@@ -6,9 +6,9 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     while(tmp!=NULL){
         //printf("x_suiv :%f , y_suiv :%f\n",tmp->suiv->nd->x,tmp->suiv->nd->y);
         if(tmp->nd->x==x && tmp->nd->y==y){ // Si on trouve le noeud correspondant
-            printf("Passe\n");
+            //printf("Passe\n");
             res=tmp->nd;
-            printf("%f : %f\n",res->x,res->y);
+            //printf("%f : %f\n",res->x,res->y);
             return res;
         }
         tmp=tmp->suiv;
@@ -107,18 +107,6 @@ Reseau* reconstitueReseauListe(Chaines *C){
     return res;
 }
 
-void liberer_noued(Noeud *nd){
-    if(nd){
-        CellNoeud *tmp=nd->voisins;
-        CellNoeud *tmp2=NULL;
-        while(tmp){
-            tmp2=tmp->suiv;
-            free(tmp);
-            tmp=tmp2;
-        }
-        free(nd);
-    }
-}
 void liberer_noeud(Noeud *nd){  
     CellNoeud *cellcourant;
     while (nd->voisins){

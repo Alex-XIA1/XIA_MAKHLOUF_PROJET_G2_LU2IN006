@@ -82,31 +82,28 @@ void insererNoeudArbre(Noeud * n,ArbreQuat** a, ArbreQuat* parent){
             newyc=parent->yc/2;
             ajout=creerArbreQuat(newxc,newyc,newcoteX,newcoteY);
             ajout->noeud=n;
-            parent->so=ajout;
             //printf("Passee l87\n");
         }else if(n->x>=parent->xc && n->y<parent->yc){
             newxc=parent->xc+parent->xc/2;
             newyc=parent->yc/2;
             ajout=creerArbreQuat(newxc,newyc,newcoteX,newcoteY);
             ajout->noeud=n;
-            parent->se=ajout;
             //printf("Passee l91\n");
         }else if(n->x<parent->xc && n->y>=parent->yc){
             newxc=parent->xc/2;
             newyc=parent->yc+parent->yc/2;
             ajout=creerArbreQuat(newxc,newyc,newcoteX,newcoteY);
             ajout->noeud=n;
-            parent->no=ajout;
             //printf("Passee l95\n");
         }else if(n->x>=parent->xc && n->y>=parent->yc){
             newxc=parent->xc+parent->xc/2;
             newyc=parent->yc+parent->yc/2;
             ajout=creerArbreQuat(newxc,newyc,newcoteX,newcoteY);
             ajout->noeud=n;
-            parent->ne=ajout;
         }else{
             printf("Probleme\n");
         }
+        (*a)=ajout;
     }else if((*a)->noeud!=NULL){
         //On oublie pas de mettre a jour parent
         Noeud * ancienN=(*a)->noeud;
@@ -304,6 +301,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
         }
         tmpC=tmpC->suiv;
     }
+    detruire_arbre(parent);
     //printf("Reseau construit avec succes !!!!\n");
     
     return res;
