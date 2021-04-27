@@ -18,6 +18,7 @@ int foncH(int key, int M){
     return res;
 }
 
+//On cherche un noeud dans le reseau a partir de la table de hachage en le renvoyant s'il est deja present sinon on le cree et le renvoi
 Noeud * rechercheCreeNoeudHachage(Reseau *R, TableHachage *H,double x, double y){
     int clefH=foncH(foncK(x,y),H->m);
     if(H->T[clefH]!=NULL){
@@ -70,6 +71,7 @@ Noeud * rechercheCreeNoeudHachage(Reseau *R, TableHachage *H,double x, double y)
     }
 }
 
+//On reconstitue le reseau sans oublier de cree les voisins et les commodites
 Reseau* reconstitueReseauHachage(Chaines *C, int M){
     Reseau * res=malloc(sizeof(Reseau));
     res->nbNoeuds=0;
@@ -142,9 +144,12 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
         }
         tmpC=tmpC->suiv;
     }
+    //Afin de pouvoir bien faire les tests de vitesse, on devra commenter la fonction de liberation
+    detruireTableH(tabH);
     return res;
 }
 
+//Fonction fournie d'affichage renommee
 void afficheReseauHSVG(Reseau *R, char* nomInstance){
     CellNoeud *courN,*courv;
     SVGwriter svg;
@@ -176,17 +181,6 @@ void afficheReseauHSVG(Reseau *R, char* nomInstance){
 //A verifier
 void detruireTableH(TableHachage* cible){
     //On libere les noeuds a partir du reseau on peut ainsi ignorer la liberation des noeuds de la table
-    //CellNoeud* tmp;
-    /*for(int i = 0;i<cible->m;i++){
-        while(cible->T[i]!=NULL){
-            tmp=cible->T[i];
-            cible->T[i]=cible->T[i]->suiv;
-            //Utilise la fonction de liberation d'un cellnoeud
-            free(tmp);
-            //liberer les voisins aussi ou pas
-        }
-    }*/
-    //On oublie pas de liberer le tableau et la structure
-    //free(cible->T);
+    free(cible->T);
     free(cible);
 }

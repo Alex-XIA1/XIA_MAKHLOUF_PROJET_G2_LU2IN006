@@ -5,6 +5,8 @@
 #include "Chaine.h"
 #include "SVGwriter.h"
 
+
+//Fonction qui va lire les chaines, il faut faire attention aux deux premieres lignes et la ligne vide
 Chaines * lectureChaines(FILE* f){
     FILE* ptr =NULL;
     ptr = f;
@@ -79,6 +81,7 @@ Chaines * lectureChaines(FILE* f){
 }
 
 
+//Ecrit dans un fichier avec un ordre inverse une chaine
 void ecrireChaines(Chaines *C, FILE *f){
     FILE *ptr =NULL;
     ptr = f;
@@ -126,11 +129,7 @@ void ecrireChaines(Chaines *C, FILE *f){
 }
 
 
-
-    
-
-
-
+//Fonction d'affichage fournie
 void afficheChainesSVG(Chaines *C, char* nomInstance){
     //int i;
     double maxx=0,maxy=0,minx=1e6,miny=1e6;
@@ -172,6 +171,7 @@ void afficheChainesSVG(Chaines *C, char* nomInstance){
 }
 
 
+//Calcul la longueur d'une chaine par la somme de termes calcules par la formule de Pythagore
 double longueurChaine(CellChaine *c){
     CellChaine *tmp =c;
     double res=0;
@@ -206,6 +206,7 @@ double longueurChaine(CellChaine *c){
     return res;
 }
 
+//Calcul la longueur totale de la chaine
 double longueurTotale(Chaines *C){
     double res=0;
     Chaines* tmp =C;
@@ -226,6 +227,7 @@ double longueurTotale(Chaines *C){
     return res;
 }
 
+//Compte le nombre total de point en sommant chaque point
 int comptePointsTotal(Chaines *C){
     int cptocc=0;
     Chaines *tmpchaine=C;
@@ -252,6 +254,7 @@ int comptePointsTotal(Chaines *C){
     return cptocc;
 }
 
+//Libere l'espace lie a une liste de points
 void liberer_liste_points(CellPoint *p){
     if(p){
         CellPoint *tmp=NULL;
@@ -262,6 +265,8 @@ void liberer_liste_points(CellPoint *p){
         }
     }
 }
+
+//libere l'espace liee a une chaine
 void liberer_cellChaine(CellChaine *c){
     if(c){
         CellChaine *tmp=NULL;
@@ -273,6 +278,8 @@ void liberer_cellChaine(CellChaine *c){
         }
     }
 }
+
+//Libere l'espace lie a une liste de chaines
 void liberer_chaines(Chaines *c){
     if(c){
         liberer_cellChaine(c->chaines);
@@ -281,6 +288,7 @@ void liberer_chaines(Chaines *c){
 }
 
 //Exercice 6
+//Genere une chaine aleatoire en allouant l'espace necessaire qui sera a liberer a la fin
 Chaines* generationAleatoire(int nbChaines,int nbPointsChaine,int xmax, int ymax){
     Chaines * res =malloc(sizeof(Chaines));
     res->gamma=3;

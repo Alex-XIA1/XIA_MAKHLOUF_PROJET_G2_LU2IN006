@@ -18,23 +18,22 @@ int main(){
         return 1;
     }*/
 
-    //TODO
-    FILE*ptrecrire=NULL;
+    
+    /*FILE*ptrecrire=NULL;
     ptrecrire=fopen("Ex6_Q1.txt","w");
     if(ptrecrire==NULL){
         printf("Erreur d'ouverture\n");
         return 1;
-    }
+    }*/
 
-    /*
-    //Rayane a decommente si besoin d'ecrire dans un fichier
-    FILE*ptrq3=NULL;
+    
+    /*FILE*ptrq3=NULL;
     ptrq3=fopen("Ex6_Q3_G1.txt","w");
     if(ptrq3==NULL){
         printf("Erreur d'ouverture\n");
         return 1;
-    }
-    */
+    }*/
+    
 
     //Decommenter la boucle Ex6 question 3
     /*FILE*ptrq3bis=NULL;
@@ -85,12 +84,13 @@ int main(){
 
 
 
-    clock_t /*tinitL,tfinalL,*/tinitAb,tfinalAb,tinitH1,tfinalH1,tinitH2,tfinalH2;
+    clock_t tinitL,tfinalL,tinitAb,tfinalAb,tinitH1,tfinalH1,tinitH2,tfinalH2;
 
-    double /*tL,*/tAb,tH1,tH2;
-    /*tinitL=clock();
-    //resL=TEST ICI; //Rayane ajoute la fonction de reconstitution ici et decommente tinit,tfinal et t pour les listes
-    tfinalL=clock();*/
+    double tL,tAb,tH1,tH2;
+    tinitL=clock();
+    Reseau *resL=reconstitueReseauListe(test);
+    tfinalL=clock();
+    tL=((double)(tfinalL-tinitL))/CLOCKS_PER_SEC;
 
     
     //Arbre Quat
@@ -105,19 +105,35 @@ int main(){
     tfinalH1=clock();
     tH1=((double)(tfinalH1-tinitH1))/CLOCKS_PER_SEC;
 
-    //Hachage pour taille 1000
+    //Hachage pour taille 10000
     tinitH2=clock();
     Reseau* resH2=reconstitueReseauHachage(test,10000);
     tfinalH2=clock();
     tH2=((double)(tfinalH2-tinitH2))/CLOCKS_PER_SEC;
     
 
-    //le 1 est temporaire
-    //Rayane change la valeur 1.0 par la valeur que tu auras calculee + decommente
-    //fprintf(ptrecrire,"%lf %lf %lf %lf\n",1.0,tH1,tH2,tAb);
     
-    //TODO partie liste
+    //fprintf(ptrecrire,"%lf %lf %lf %lf\n",tL,tH1,tH2,tAb);
+    
+    //Ex6 Question 3(partie Liste)
+    /*for(int i=500;i<=5000;i+=500){
+        Chaines* chaineTmpL=generationAleatoire(i,100,5000,5000); 
+
+        tinitL=clock();
+        Reseau *resL=reconstitueReseauListe(chaineTmpL);
+        tfinalL=clock();
+        tL=((double)(tfinalL-tinitL))/CLOCKS_PER_SEC;
+
+        fprintf(ptrq3,"%d %lf\n",i,tL);
+        //On utilise pas ces fonctions sinon le temps d'execution est trop long
+        //liberer_chaines(chaineTmpL);
+        //liberer_reseau(resL);
+        chaineTmpL=NULL;
+        resL=NULL;
+        printf("Tour numero : %d\n",i);
+    }*/
     //Ex6 Question 3(partie courbe table et arbre)
+
 
     /*for(int i=500;i<=5000;i+=500){
         Chaines* chaineTmp=generationAleatoire(i,100,5000,5000);        
@@ -130,14 +146,14 @@ int main(){
 
         //Hachage pour taille 100
         tinitH1=clock();
-        Reseau* resH1=reconstitueReseauHachage(chaineTmp,100);
+        Reseau* resH1_2=reconstitueReseauHachage(chaineTmp,100);
         tfinalH1=clock();
         tH1=((double)(tfinalH1-tinitH1))/CLOCKS_PER_SEC;
 
         //printf("fini");
         //Hachage pour taille 10000
         tinitH2=clock();
-        Reseau* resH2=reconstitueReseauHachage(chaineTmp,10000);
+        Reseau* resH2_2=reconstitueReseauHachage(chaineTmp,10000);
         tfinalH2=clock();
         tH2=((double)(tfinalH2-tinitH2))/CLOCKS_PER_SEC;
 
@@ -145,16 +161,19 @@ int main(){
 
         //Fonctions a verifier
         liberer_chaines(chaineTmp);
-        liberer_reseau(resAb);
-        liberer_reseau(resH1);
-        liberer_reseau(resH2);
-        //Liberer chaque chaine en fin de boucle pour eviter les fuites TODO !!!!!
+        liberer_reseau(resAb2);
+        liberer_reseau(resH1_2);
+        liberer_reseau(resH2_2);
+        
     }*/
-    
-   
+    liberer_chaines(test);
+    liberer_reseau(resL);
+    liberer_reseau(resAb);
+    liberer_reseau(resH1);
+    liberer_reseau(resH2);
     fclose(fp);
     //fclose(fp2);
-    fclose(ptrecrire);
+    //fclose(ptrecrire);
     //fclose(ptrq3);
     //fclose(ptrq3bis);
     return 0;
