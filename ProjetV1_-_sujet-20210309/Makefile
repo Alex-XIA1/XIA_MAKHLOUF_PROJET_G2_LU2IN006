@@ -25,7 +25,7 @@ Hachage.o: Hachage.c
 HachageMain.o : HachageMain.c Hachage.h Reseau.h
 	$(CC) $(CFLAGS) -c HachageMain.c -lm
 
-Reseau.o: Reseau.c Reseau.h
+Reseau.o: Reseau.c Reseau.h SVGwriter.h
 	$(CC) $(CFLAGS) -c Reseau.c -lm
 
 ReconstitueReseau: ReconstitueReseau.o Reseau.o Chaine.o SVGwriter.o

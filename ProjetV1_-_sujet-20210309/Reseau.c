@@ -219,8 +219,6 @@ void ecrireReseau(Reseau *R, FILE *f){
         printf("Fichier passe en parametre non ouvert");
     }
 }
-
-
 void afficheReseauSVGL2(Reseau *R, char* nomInstance){
     CellNoeud *courN,*courv;
     SVGwriter svg;
