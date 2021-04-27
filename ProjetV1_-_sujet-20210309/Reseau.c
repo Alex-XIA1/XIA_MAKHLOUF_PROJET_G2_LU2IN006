@@ -57,69 +57,69 @@ Reseau* reconstitueReseauListe(Chaines *C){
         if(c==NULL){
             printf("Erreur d'allocation memoire\n");
             return NULL;
-    CellChaine * tmpC=C->chaines; // Liste chainee des chaines
-    while(tmpC){ // Parcours de la liste des chaines
-        CellPoint *prec=tmpC->points;
-        Noeud * n=rechercheCreeNoeudListe(res,prec->x,prec->y);
-        CellPoint *tmpP=NULL;
-        Noeud * premiern=n;
-        if(prec!=NULL){
-            tmpP=prec->suiv;
         }
-        Noeud *derniern=NULL;
-        while(tmpP!=NULL){
-            Noeud * recup=rechercheCreeNoeudListe(res,tmpP->x,tmpP->y);
-            CellNoeud *vois=malloc(sizeof(CellNoeud));
-            vois->nd=n;
-            vois->suiv=recup->voisins;
-            recup->voisins=vois;
+        CellChaine * tmpC=C->chaines; // Liste chainee des chaines
+        while(tmpC){ // Parcours de la liste des chaines
+            CellPoint *prec=tmpC->points;
+            Noeud * n=rechercheCreeNoeudListe(res,prec->x,prec->y);
+            CellPoint *tmpP=NULL;
+            Noeud * premiern=n;
+            if(prec!=NULL){
+                tmpP=prec->suiv;
+            }
+            Noeud *derniern=NULL;
+            while(tmpP!=NULL){
+                Noeud * recup=rechercheCreeNoeudListe(res,tmpP->x,tmpP->y);
+                CellNoeud *vois=malloc(sizeof(CellNoeud));
+                vois->nd=n;
+                vois->suiv=recup->voisins;
+                recup->voisins=vois;
             
 
-            //On ajoute le noeud actuel au voisins du precedent
-            //On veut eviter les doublons on parcourt donc la liste des voisins du precedent
-            //on parcours les voisins de n
-            CellNoeud *tmp1=n->voisins;
-            int trouve=0;
-            while(tmp1!=NULL){
-                if(tmp1->nd==recup){
-                    //printf("JE PASSE ICI\n");
-                    trouve=1;
-                    break;
+                //On ajoute le noeud actuel au voisins du precedent
+                //On veut eviter les doublons on parcourt donc la liste des voisins du precedent
+                //on parcours les voisins de n
+                CellNoeud *tmp1=n->voisins;
+                int trouve=0;
+                while(tmp1!=NULL){
+                    if(tmp1->nd==recup){
+                        //printf("JE PASSE ICI\n");
+                        trouve=1;
+                        break;
+                    }
+                    tmp1=tmp1->suiv;
                 }
-                tmp1=tmp1->suiv;
-            }
-            if(trouve==0){
-                CellNoeud *voisduprec=malloc(sizeof(CellNoeud));
-                voisduprec->nd=recup;
-                voisduprec->suiv=n->voisins;
-                n->voisins=voisduprec;
-            }
+                if(trouve==0){
+                    CellNoeud *voisduprec=malloc(sizeof(CellNoeud));
+                    voisduprec->nd=recup;
+                    voisduprec->suiv=n->voisins;
+                    n->voisins=voisduprec;
+                }
 
-            n=recup;
-            if(tmpP->suiv==NULL){
-                derniern=recup;
-            }
+                n=recup;
+                if(tmpP->suiv==NULL){
+                    derniern=recup;
+                }
 
             
-            tmpP=tmpP->suiv;
-        }
-        if(premiern!=NULL && derniern!=NULL){
-            CellCommodite* commo= malloc(sizeof(CellCommodite));
-            commo->extrA=premiern;
-            commo->extrB=derniern;
-            if(res->commodites==NULL){
-                commo->suiv=NULL;
-            }else{
-                commo->suiv=res->commodites;
+                tmpP=tmpP->suiv;
             }
-            res->commodites=commo;
+            if(premiern!=NULL && derniern!=NULL){
+                CellCommodite* commo= malloc(sizeof(CellCommodite));
+                commo->extrA=premiern;
+                commo->extrB=derniern;
+                if(res->commodites==NULL){
+                    commo->suiv=NULL;
+                }else{
+                    commo->suiv=res->commodites;
+                }
+                res->commodites=commo;
+            }
+            tmpC=tmpC->suiv;
         }
-        tmpC=tmpC->suiv;
+        return res;
     }
-    return res;
 }
-
-<<<<<<< HEAD
 /*void liberer_noued(Noeud *nd){
     if(nd){
         CellNoeud *tmp=nd->voisins;
@@ -132,8 +132,6 @@ Reseau* reconstitueReseauListe(Chaines *C){
         free(nd);
     }
 }*/
-=======
->>>>>>> 57d70f536a673491dd39a56ce0e5d6d8967ceda7
 void liberer_noeud(Noeud *nd){  
     CellNoeud *cellcourant;
     while (nd->voisins){
@@ -257,7 +255,7 @@ void afficheReseauSVGL2(Reseau *R, char* nomInstance){
         if (maxy<courN->nd->y) maxy=courN->nd->y;
         if (minx>courN->nd->x) minx=courN->nd->x;
         if (miny>courN->nd->y) miny=courN->nd->y;
-        courN=courN->suiv;
+            courN=courN->suiv;
     }
     SVGinit(&svg,nomInstance,500,500);
     courN=R->noeuds;
@@ -265,9 +263,10 @@ void afficheReseauSVGL2(Reseau *R, char* nomInstance){
         SVGpoint(&svg,500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
         courv=courN->nd->voisins;
         while (courv!=NULL){
-            if (courv->nd->num<courN->nd->num)
+            if (courv->nd->num<courN->nd->num){
                 SVGline(&svg,500*(courv->nd->x-minx)/(maxx-minx),500*(courv->nd->y-miny)/(maxy-miny),500*(courN->nd->x-minx)/(maxx-minx),500*(courN->nd->y-miny)/(maxy-miny));
-            courv=courv->suiv;
+                courv=courv->suiv;
+            }
         }
         courN=courN->suiv;
     }
