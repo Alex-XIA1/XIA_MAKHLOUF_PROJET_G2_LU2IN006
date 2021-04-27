@@ -18,6 +18,7 @@ int foncH(int key, int M){
     return res;
 }
 
+//On cherche un noeud dans le reseau a partir de la table de hachage en le renvoyant s'il est deja present sinon on le cree et le renvoi
 Noeud * rechercheCreeNoeudHachage(Reseau *R, TableHachage *H,double x, double y){
     int clefH=foncH(foncK(x,y),H->m);
     if(H->T[clefH]!=NULL){
@@ -70,6 +71,7 @@ Noeud * rechercheCreeNoeudHachage(Reseau *R, TableHachage *H,double x, double y)
     }
 }
 
+//On reconstitue le reseau sans oublier de cree les voisins et les commodites
 Reseau* reconstitueReseauHachage(Chaines *C, int M){
     Reseau * res=malloc(sizeof(Reseau));
     res->nbNoeuds=0;
@@ -147,6 +149,7 @@ Reseau* reconstitueReseauHachage(Chaines *C, int M){
     return res;
 }
 
+//Fonction fournie d'affichage renommee
 void afficheReseauHSVG(Reseau *R, char* nomInstance){
     CellNoeud *courN,*courv;
     SVGwriter svg;

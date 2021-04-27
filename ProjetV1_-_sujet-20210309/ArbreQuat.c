@@ -2,6 +2,7 @@
 #include "Chaine.h"
 #include "Reseau.h"
 
+//On cherche ici les maximums et minimums de chaque coordonnée en initialisant a la premiere valeur
 void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax,double *ymax){
     Chaines* tmpC=C;
     if(tmpC==NULL){
@@ -48,6 +49,7 @@ void chaineCoordMinMax(Chaines* C, double* xmin, double* ymin, double* xmax,doub
     //printf("OK\n");
 }
 
+//On alloue l'espace necessaire pour stocker un arbre mais il faudra liberer cet espace a la fin
 ArbreQuat * creerArbreQuat(double xc, double yc, double coteX,double coteY){
     ArbreQuat* res=malloc(sizeof(ArbreQuat));
     res->xc=xc;
@@ -63,6 +65,7 @@ ArbreQuat * creerArbreQuat(double xc, double yc, double coteX,double coteY){
     return res;
 }
 
+//Insere un noeud dans l'arbre, le noeud sera inserer lorsqu'une feuille vide sera trouvee
 void insererNoeudArbre(Noeud * n,ArbreQuat** a, ArbreQuat* parent){
     if(n==NULL){
         return;
@@ -130,6 +133,7 @@ void insererNoeudArbre(Noeud * n,ArbreQuat** a, ArbreQuat* parent){
     }
 }
 
+//Recherche un noeud du reseau a partir d'un arbre si le noeud existe il sera renvoye sinon on cree le noeud et on le renvoie en allouant l'espace pour le noeud
 Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat* parent,double x,double y){
     if(*a==NULL){
         //printf("Passee l139\n");
@@ -207,6 +211,8 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat* parent,double 
     }
 }
 
+
+//On reconstitue le reseau, on doit ajouter les voisins et les commodites en plus
 Reseau* reconstitueReseauArbre(Chaines* C){
     
     Reseau *res=malloc(sizeof(Reseau));
@@ -307,6 +313,7 @@ Reseau* reconstitueReseauArbre(Chaines* C){
     return res;
 }
 
+//Libere l'espace attribue aux arbres
 void detruire_arbre(ArbreQuat *a){
     if(a!=NULL){
         detruire_arbre(a->so);
@@ -317,6 +324,7 @@ void detruire_arbre(ArbreQuat *a){
     }
 }
 
+//Fonction d'affichage fournie
 void afficheReseauSVG(Reseau *R, char* nomInstance){
     CellNoeud *courN,*courv;
     SVGwriter svg;
