@@ -78,8 +78,8 @@ int main(){
     //Reseau * res=reconstitueReseauHachage(test,100);
     //afficheReseauHSVG(res,"EX4_Q4_5");
     //afficheReseauHSVG(res,"verification");
-    Reseau * resab=reconstitueReseauArbre(test);
-    afficheReseauSVG(resab,"EX5test");
+    //Reseau * resab=reconstitueReseauArbre(test);
+    //afficheReseauSVG(resab,"EX5test");
 
 
 
