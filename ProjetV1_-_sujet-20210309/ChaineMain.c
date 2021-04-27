@@ -105,11 +105,11 @@ int main(){
     tfinalH1=clock();
     tH1=((double)(tfinalH1-tinitH1))/CLOCKS_PER_SEC;
 
-    //Hachage pour taille 1000
-    /*tinitH2=clock();
+    //Hachage pour taille 10000
+    tinitH2=clock();
     Reseau* resH2=reconstitueReseauHachage(test,10000);
     tfinalH2=clock();
-    tH2=((double)(tfinalH2-tinitH2))/CLOCKS_PER_SEC;*/
+    tH2=((double)(tfinalH2-tinitH2))/CLOCKS_PER_SEC;
     
 
     
@@ -170,7 +170,7 @@ int main(){
     liberer_reseau(resL);
     liberer_reseau(resAb);
     liberer_reseau(resH1);
-    //liberer_reseau(resH2);
+    liberer_reseau(resH2);
     fclose(fp);
     //fclose(fp2);
     //fclose(ptrecrire);
