@@ -45,7 +45,6 @@ Reseau* reconstitueReseauListe(Chaines *C){
     res->nbNoeuds=0; // Nombre de noeuds du reseau est initialement null
     res->noeuds=NULL;
     res->commodites=NULL;
-<<<<<<< HEAD
     CellChaine * tmp1=C->chaines; // Liste chainee des chaines
     CellCommodite *c=res->commodites;
     Noeud *n=NULL;
@@ -58,7 +57,6 @@ Reseau* reconstitueReseauListe(Chaines *C){
         if(c==NULL){
             printf("Erreur d'allocation memoire\n");
             return NULL;
-=======
     CellChaine * tmpC=C->chaines; // Liste chainee des chaines
     while(tmpC){ // Parcours de la liste des chaines
         CellPoint *prec=tmpC->points;
@@ -67,7 +65,6 @@ Reseau* reconstitueReseauListe(Chaines *C){
         Noeud * premiern=n;
         if(prec!=NULL){
             tmpP=prec->suiv;
->>>>>>> 80557664257d043635e4afa009f02541af73d0a0
         }
         Noeud *derniern=NULL;
         while(tmpP!=NULL){
@@ -246,13 +243,7 @@ void ecrireReseau(Reseau *R, FILE *f){
         printf("Fichier passe en parametre non ouvert");
     }
 }
-<<<<<<< HEAD
-void afficheReseauSVG2(Reseau *R, char* nomInstance){
-=======
-
-
 void afficheReseauSVGL2(Reseau *R, char* nomInstance){
->>>>>>> 80557664257d043635e4afa009f02541af73d0a0
     CellNoeud *courN,*courv;
     SVGwriter svg;
     double maxx=0,maxy=0,minx=1e6,miny=1e6;
