@@ -1,4 +1,4 @@
-CC=gcc
+CC=gcc -g
 CFLAGS=-W -Wall -pedantic
 EXEC=ChaineMain HachageMain ReconstitueReseau
 
@@ -28,13 +28,22 @@ HachageMain.o : HachageMain.c Hachage.h Reseau.h
 Reseau.o: Reseau.c Reseau.h SVGwriter.h
 	$(CC) $(CFLAGS) -c Reseau.c -lm
 
-ReconstitueReseau: ReconstitueReseau.o Reseau.o Chaine.o SVGwriter.o
-	$(CC) $(CFLAGS) -o ReconstitueReseau ReconstitueReseau.o Reseau.o Chaine.o SVGwriter.o -lm 
+ReconstitueReseau: ReconstitueReseau.o Reseau.o Chaine.o SVGwriter.o Graphe.o Struct_Liste.o Struct_File.o Hachage.o ArbreQuat.o
+	$(CC) $(CFLAGS) -o ReconstitueReseau ReconstitueReseau.o Reseau.o Chaine.o SVGwriter.o Graphe.o Struct_File.o Struct_Liste.o Hachage.o ArbreQuat.o -lm 
 
-ReconstitueReseau.o: ReconstitueReseau.c Reseau.h Chaine.h 
+ReconstitueReseau.o: ReconstitueReseau.c Reseau.h Chaine.h Graphe.h
 	$(CC) $(CFLAGS) -c ReconstitueReseau.c -lm
 ArbreQuat.o:ArbreQuat.c
 	$(CC) $(CFLAGS) -c ArbreQuat.c -lm
+
+Graphe.o: Graphe.c Struct_Liste.h Reseau.h Struct_File.h
+	$(CC) $(CFLAGS) -c Graphe.c -lm
+
+Struct_File.o:Struct_File.c Struct_File.h
+	$(CC) $(CFLAGS) -c Struct_File.c 
+
+Struct_Liste.o: Struct_Liste.c Struct_Liste.h
+	$(CC) $(CFLAGS) -c Struct_Liste.c
 
 clean:
 	rm -rf *.o ChaineMain HachageMain ReconstitueReseau

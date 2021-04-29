@@ -32,6 +32,12 @@ typedef struct {
     CellCommodite *commodites;      /* Liste des commodites a relier */
 } Reseau;
 
+/* Liste de liaisons */
+typedef struct _liste_Liaisons{
+    int *tab;                       /*tableau des numeros des extremites de la liaison*/
+    struct _liste_Liaisons *suiv;   /*liaison suivante*/
+} liste_L;
+
 Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y);
 Reseau* reconstitueReseauListe(Chaines *C);
 void ecrireReseau(Reseau *R, FILE *f);
