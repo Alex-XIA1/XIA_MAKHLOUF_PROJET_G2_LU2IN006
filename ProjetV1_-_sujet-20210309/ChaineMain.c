@@ -11,6 +11,12 @@ int main(){
         printf("Erreur a l'ouverture du fichier\n");
         return 1;
     }
+    FILE *fppla=NULL;
+    fppla=fopen("07397_pla.cha","r");
+    if(fp ==NULL){
+        printf("Erreur a l'ouverture du fichier\n");
+        return 1;
+    }
     /*FILE*fp2=NULL;
     fp2=fopen("00014_burma2.res","w");
     if(fp2==NULL){
@@ -63,6 +69,9 @@ int main(){
     Chaines* test=NULL;
     test=lectureChaines(fp);
 
+    Chaines* test2=NULL;
+    test2=lectureChaines(fp);
+
     //printf("gamma = %d\n",test->gamma);
     //liberer_chaines(test);
     //On commente ecrireChaines et afficheCHainesSVG pour eviter la recreation a chaque execution
@@ -78,8 +87,9 @@ int main(){
     //Reseau * res=reconstitueReseauHachage(test,100);
     //afficheReseauHSVG(res,"EX4_Q4_5");
     //afficheReseauHSVG(res,"verification");
-    //Reseau * resab=reconstitueReseauArbre(test);
-    //afficheReseauSVG(resab,"EX5test");
+    Reseau * resab=reconstitueReseauArbre(test);
+    afficheReseauSVG(resab,"EX5test");
+    Reseau* pla=reconstitueReseauHachage(test2,10000);
 
 
 
@@ -171,7 +181,9 @@ int main(){
     liberer_reseau(resAb);
     liberer_reseau(resH1);
     liberer_reseau(resH2);
+    liberer_reseau(pla);
     fclose(fp);
+    fclose(fppla);
     //fclose(fp2);
     //fclose(ptrecrire);
     //fclose(ptrq3);

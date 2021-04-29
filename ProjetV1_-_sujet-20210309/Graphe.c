@@ -286,10 +286,12 @@ int reorganiseReseau(Reseau* r){
     Commod c;
     int i;
     int j;
+    
     //calcule la plus courte chaine pour chaque commodite
     for(i=0;i<nbcommod;i++){
         c=g->T_commod[i];
         L[i]=chemin(g, c.e1, c.e2);
+        
     }
 
     int** mat=(int**)malloc(nbsom*sizeof(int*));
@@ -311,7 +313,7 @@ int reorganiseReseau(Reseau* r){
     ListeEntier l;
     int u=L[0]->u;
     int v;
-    for(i=1;i<nbcommod;i++){
+    for(i=0;i<nbcommod;i++){
         l=L[i];
         while(l!=NULL){
             v=l->u;

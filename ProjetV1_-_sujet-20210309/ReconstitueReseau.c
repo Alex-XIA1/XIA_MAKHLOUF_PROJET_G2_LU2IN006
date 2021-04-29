@@ -36,12 +36,14 @@ int main(){
             printf("Veuillez saisir la taille de la table de hachage souhaitee\n");
             fgets(buffer,LONGUEURE_LIGNE,stdin);
             sscanf(buffer,"%d",&M);
+            printf("Valeur OK\n");
             r=reconstitueReseauHachage(liste,M);
             break;  
         case 3:
 
             printf("Votre choix: Arbres\n");
             r=reconstitueReseauArbre(liste);
+            printf("OK\n");
             break;
         default :
             printf("Numero de methode incorrect\n");
@@ -56,7 +58,7 @@ int main(){
         printf("Erreur d'ouverture du fichier\n");
         return -1;
     }
-    //ecrireReseau(r,pf2);
+    ecrireReseau(r,pf2);
     
     //afficheReseauSVGL2(res, "reconstitueReseauListeEx2");
 
@@ -64,8 +66,9 @@ int main(){
     //Graphe *g=creerGraphe(r);
     //int d=plus_petit_nombre_aretes(g,g->T_som[0]->num-1,g->T_som[6]->num-1);
     //printf("d= %d\n",d);
-
+    printf("OK\n");
     int reorganisation=reorganiseReseau(r);
+    
     if(reorganisation==1)
         printf("La reorganisation du reseau a ete faite avec succes\n");
     else

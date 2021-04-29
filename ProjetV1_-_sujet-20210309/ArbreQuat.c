@@ -177,7 +177,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R,ArbreQuat** a,ArbreQuat* parent,double 
             ajoutcell->suiv=NULL;
         }
         R->noeuds=ajoutcell;
-        //probleme ici
+        
         //printf("Passee l197\n");
         insererNoeudArbre(ajout,a,parent);
         
@@ -238,33 +238,37 @@ Reseau* reconstitueReseauArbre(Chaines* C){
 
     CellChaine *tmpC=C->chaines;
     while(tmpC){
-        tmpab=abQ;
-        parent=abQ;
         CellPoint *prec=tmpC->points;
         Noeud * ajoutp1=rechercheCreeNoeudArbre(res,&tmpab,parent,prec->x,prec->y);
         //printf("val de recup %lf et %lf\n",ajoutp1->x,ajoutp1->y);
         CellPoint *tmpP=NULL;
         Noeud * premiern=ajoutp1;
-        //printf("Passee l211\n");
         if(prec!=NULL){
-            //printf("Passee l213\n");
             tmpP=prec->suiv;
         }
         Noeud *derniern=NULL;
         //printf("Passee l217\n");
         while(tmpP!=NULL){
-
             //On ajoute le precedent aux voisins du noeud actuel
-            //printf("Passee l220\n");
             Noeud* recup=rechercheCreeNoeudArbre(res,&tmpab,parent,tmpP->x,tmpP->y);
-            //printf("val de recup %lf et %lf\n",recup->x,recup->y);
-            //printf("Passee l222\n");
-            CellNoeud *vois=malloc(sizeof(CellNoeud));
-            vois->nd=ajoutp1;
-            vois->suiv=recup->voisins;
-            recup->voisins=vois;
-            //printf("Passee l225\n");
-            //ON fait de meme pour le noeud precedent
+            
+            int tmpr=0;
+            CellNoeud *tmprecup=recup->voisins;
+            while(tmprecup!=NULL){
+                if(tmprecup->nd==ajoutp1){
+                    tmpr=1;
+                    break;
+                    printf("OK\n");
+                }
+                tmprecup=tmprecup->suiv;
+                
+            }
+            if(tmpr==0){
+                CellNoeud *vois=malloc(sizeof(CellNoeud));
+                vois->nd=ajoutp1;
+                vois->suiv=recup->voisins;
+                recup->voisins=vois;
+            }
 
             CellNoeud * tmp1=ajoutp1->voisins;
             int trouve=0;
