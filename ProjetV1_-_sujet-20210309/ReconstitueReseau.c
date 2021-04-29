@@ -7,6 +7,7 @@
 int main(){
 
     // Tests pour le fichier reseau.c
+    
     printf("Bonjour et Bienvenu\n");
     printf("Veuillez saisir la methode de votre choix parmi les suivantes ainsi que le nom du fichier \n");
     printf("Liste chainne : tapez 1\ntable de hachage : tapez 2\narbres : tapez 3\n ");
@@ -61,6 +62,7 @@ int main(){
     //afficheReseauSVGL2(res, "reconstitueReseauListeEx2");
 
     // Tests pour le fichier Graphe.c
+
     //Graphe *g=creerGraphe(r);
     //int d=plus_petit_nombre_aretes(g,g->T_som[0]->num-1,g->T_som[6]->num-1);
     //printf("d= %d\n",d);
